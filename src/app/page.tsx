@@ -44,7 +44,7 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="h-px w-full my-5 lg:my-10 bg-zinc-200"></div>
+        <div className="h-px mx-auto my-5 w-[150px] lg:w-full lg:my-10 bg-zinc-200"></div>
 
         <section className="expSection flex flex-col gap-10">
           <h1 className="sectionHeader text-xl md:text-2xl font-semibold">Work Experience</h1>
@@ -72,6 +72,12 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </section>
+
+        <div className="h-px mx-auto my-5 w-[150px] lg:w-full lg:my-10 bg-zinc-200"></div>
+
+        <section className="projectsSection flex flex-col gap-10">
+          <h1 className="sectionHeader text-xl md:text-2xl font-semibold capitalize text-center">Here's is what i've been up to.</h1>
         </section>
       </div>
     </div>
