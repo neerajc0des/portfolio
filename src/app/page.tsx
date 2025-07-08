@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { MessageCircle, CircleDot, Link } from 'lucide-react'
+import { MessageCircle, CircleDot, Link, Github, Globe } from 'lucide-react'
 
 export default function Home() {
   return (
@@ -53,15 +53,15 @@ export default function Home() {
               <div className="duration text-[#A1A1AA] text-sm md:text-base w-[300px]">Mar 2025 - Present</div>
               <div className="work flex items-center flex-1 justify-start gap-2">
                 <p className="text-paragraph">Co-Founder at</p>
-                <Button className="bg-[#FFF2CD] hover:bg-[#FFF2CD] border border-[#EDCD79] text-[#E18433]"><Link /> 29 Bytes</Button>
+                <Button className="cursor-pointer bg-[#FFF2CD] hover:bg-[#FFF2CD] border border-[#EDCD79] text-[#E18433]"><Link /> 29 Bytes</Button>
               </div>
             </div>
 
             <div className="workItem flex flex-col md:flex-row md:items-center gap-2 md:justify-between">
               <div className="duration text-[#A1A1AA] text-sm md:text-base w-[300px]">Oct 2024 - Feb 2025</div>
               <div className="work flex items-center flex-1 justify-start gap-2">
-                <p className="text-paragraph">Frontend Dev at</p> 
-                <Button className="bg-[#F7EFFF] hover:bg-[#F7EFFF] border border-[#8A429E] text-[#8A429E]"><Link /> PrimeGurukul</Button>
+                <p className="text-paragraph">Frontend Dev at</p>
+                <Button className="cursor-pointer bg-[#F7EFFF] hover:bg-[#F7EFFF] border border-[#8A429E] text-[#8A429E]"><Link /> PrimeGurukul</Button>
               </div>
             </div>
 
@@ -78,6 +78,27 @@ export default function Home() {
 
         <section className="projectsSection flex flex-col gap-10">
           <h1 className="sectionHeader text-xl md:text-2xl font-semibold capitalize text-center">Here's is what i've been up to.</h1>
+          <div className="proj1 p-2 lg:p-5 border border-zinc-200 rounded-md mx-2 lg:mx-5">
+            <div className="projImg relative w-[100%] h-[250px] md:h-[300px] border border-zinc-200 lg:h-[335px] rounded-md overflow-hidden">
+              <Image fill className="object-cover object-top w-full h-full" src={'/weatherProjectScreenshot.png'} alt="weather project" />
+            </div>
+            <div className="projContent space-y-2">
+              <h1 className="text-base lg:text-lg mt-5 font-semibold">Live weather website</h1>
+              <p className="text-sm text-paragraph">
+                Real-time weather, right where you are. Temp, UV, air quality — all in one view. Explore cities with interactive maps. Clean, clear, and made for everyday use.
+              </p>
+              <div className="tagContainer flex flex-wrap items-center gap-2 mt-2 lg:mt-5">
+                <span className="bg-border text-primary py-1 px-4 rounded-md text-xs lg:text-sm">Next js</span>
+                <span className="bg-border text-primary py-1 px-4 rounded-md text-xs lg:text-sm">Leaflet</span>
+                <span className="bg-border text-primary py-1 px-4 rounded-md text-xs lg:text-sm">Tailwind css</span>
+                <span className="bg-border text-primary py-1 px-4 rounded-md text-xs lg:text-sm">Open weather api</span>
+              </div>
+              <div className="cta-container space-x-2 mt-2 lg:mt-5">
+                <Button type="button" variant="outline"><Github /> Source</Button>
+                <Button type="button" variant="default"><Globe /> Visit</Button>
+              </div>
+            </div>
+          </div>
         </section>
       </div>
     </div>
