@@ -46,13 +46,29 @@ export default function Home() {
 
         <div className="h-px w-full my-5 lg:my-10 bg-zinc-200"></div>
 
-        <section className="expSection flex flex-col gap-5">
+        <section className="expSection flex flex-col gap-10">
           <h1 className="sectionHeader text-xl md:text-2xl font-semibold">Work Experience</h1>
-          <div className="sectionContent text-muted space-y-2">
-            <div className="workItem flex">
-              <div className="duration">Mar 2025 - Present</div>
-              <div className="work">
-                <p className="text-paragraph">Co-Founder at</p> <Button><Link/></Button>
+          <div className="sectionContent text-muted space-y-6 md:space-y-8">
+            <div className="workItem flex flex-col md:flex-row md:items-center gap-2 md:justify-between">
+              <div className="duration text-[#A1A1AA] text-sm md:text-base w-[300px]">Mar 2025 - Present</div>
+              <div className="work flex items-center flex-1 justify-start gap-2">
+                <p className="text-paragraph">Co-Founder at</p>
+                <Button className="bg-[#FFF2CD] hover:bg-[#FFF2CD] border border-[#EDCD79] text-[#E18433]"><Link /> 29 Bytes</Button>
+              </div>
+            </div>
+
+            <div className="workItem flex flex-col md:flex-row md:items-center gap-2 md:justify-between">
+              <div className="duration text-[#A1A1AA] text-sm md:text-base w-[300px]">Oct 2024 - Feb 2025</div>
+              <div className="work flex items-center flex-1 justify-start gap-2">
+                <p className="text-paragraph">Frontend Dev at</p> 
+                <Button className="bg-[#F7EFFF] hover:bg-[#F7EFFF] border border-[#8A429E] text-[#8A429E]"><Link /> PrimeGurukul</Button>
+              </div>
+            </div>
+
+            <div className="workItem flex flex-col md:flex-row md:items-center gap-2 md:justify-between">
+              <div className="duration text-[#A1A1AA] text-sm md:text-base w-[300px]">Feb 2023 -  Oct 2023</div>
+              <div className="work flex items-center flex-1 justify-start gap-2">
+                <p className="text-paragraph">COMEST(College Society) Tech Lead</p>
               </div>
             </div>
           </div>
