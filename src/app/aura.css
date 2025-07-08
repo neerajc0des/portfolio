@@ -1,0 +1,51 @@
+.aura-rays-wrapper {
+    inset: calc(var(--spacing)*0);
+    align-items: center;
+    display: flex;
+    position: absolute
+  }
+  
+  .aura-wrapper {
+    z-index: -1;
+    opacity: .5;
+    width: 300%;
+    height: 100%;
+    position: absolute;
+    left: -100%;
+    overflow: hidden
+  }
+  
+  @media (width>=48rem) {
+    .aura-wrapper {
+        width: 400%;
+        left: -150%
+    }
+  }
+  
+  .aura-wrapper:is(.dark *) {
+    opacity: .3
+  }
+  
+  .aura-rainbow-element {
+    aspect-ratio: 1;
+    width: 120%;
+    position: absolute;
+    left: -10%
+  }
+  
+  .aura-rays {
+    -webkit-mask-image: linear-gradient(45deg,#0000 35%,#000000e6 40%,#0000 45%,#0009 50%,#0000 55%,#000000e6 60%,#0000 65%),linear-gradient(#000c,#0000 75%);
+    mask-image: linear-gradient(45deg,#0000 35%,#000000e6 40%,#0000 45%,#0009 50%,#0000 55%,#000000e6 60%,#0000 65%),linear-gradient(#000c,#0000 75%);
+    -webkit-mask-position: 50% 0,0 0;
+    mask-position: 50% 0,0 0;
+    -webkit-mask-size: 200%,auto;
+    mask-size: 200%,auto
+  }
+  
+  @media (width>=48rem) {
+    .aura-rays {
+        -webkit-mask-size: 150%,auto;
+        mask-size: 150%,auto;
+    }
+  }
+  
