@@ -37,7 +37,7 @@ const Navbar = () => {
             duration={500}
             className='cursor-pointer hover:opacity-80'
             title="Projects"
-            onMouseEnter={setIsSparkleHovered}
+            onMouseEnter={()=>setIsSparkleHovered(true)}
             onMouseLeave={() => setIsSparkleHovered(false)}
           >
             {isSparkleHovered ? (
