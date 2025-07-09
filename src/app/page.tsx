@@ -1,15 +1,29 @@
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { MessageCircle, CircleDot, Link, Github, Globe } from 'lucide-react'
+import { MessageCircle, CircleDot, Link, Github, Globe, Menu, House } from 'lucide-react'
 
 export default function Home() {
   return (
     <div className="mx-auto bg-zinc-50/10 relative">
-      <header className="navContainer hidden sm:flex items-center justify-center fixed top-10 z-50  px-4 py-3 w-full">
+      <header className="navContainer hidden md:flex items-center justify-center fixed top-10 z-50  px-4 py-3 w-full">
         <Navbar />
       </header>
-      <div className="main-container sm:px-6 lg:px-10 relative max-w-2xl pt-[40px] sm:pt-[130px] md:pt-[150px] lg:pt-[200px] mx-auto flex flex-col justify-center px-4 gap-8">
+
+      <header className="flex md:hidden items-center justify-between fixed top-0 z-50  p-5 w-full border border-zinc-200 bg-white/65 backdrop-blur-lg text-zinc-700">
+        <a href="/" title="Home" className='hover:opacity-80 px-2'>
+          <House strokeWidth='2' size={22} />
+        </a>
+        <span className="navTrigger hover:opacity-80 px-2 cursor-pointer">
+          <Menu strokeWidth='2' size={22}/>
+        </span>
+
+        <div className="mobile-nav-menu fixed top-15 z-40">
+          menu
+        </div>
+      </header>
+      
+      <div className="main-container sm:px-6 lg:px-10 relative max-w-2xl pt-[100px] sm:pt-[130px] md:pt-[150px] lg:pt-[200px] mx-auto flex flex-col justify-center px-4 gap-8">
         <div className="pfp-container w-full pt-5">
           <img src="/pfp.jpg" className="w-24 h-24 rounded-full" alt="avatar" />
         </div>
