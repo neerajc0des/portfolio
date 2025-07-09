@@ -5,6 +5,7 @@
 
 body {
   font-family: var(--font-poppins);
+  scroll-behavior: smooth;
 }
 
 @theme inline {
@@ -94,4 +95,19 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+
+/* .cursor-circle-custom{
+  cursor: url('/cursorCircle.png') 12 12, auto;
+} */
+
+.skill-item:hover{
+  background-color: #f0f0f0;
+  transition: background ease-in-out 150ms;
+}
+
+.skill-item:hover .skill-icon{
+  transform: translateY(-2px);
+  transition: all ease-in-out 150ms;
 }
