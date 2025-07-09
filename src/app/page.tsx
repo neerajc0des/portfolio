@@ -1,9 +1,20 @@
+"use client"
+
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { MessageCircle, CircleDot, Link, Github, Globe, Menu, House } from 'lucide-react'
+import React, { useState } from 'react';
+import { MessageCircle, CircleDot, Link, Github, Globe, Menu, House, X, Instagram, Linkedin, Sparkles, Users, ScrollText } from 'lucide-react'
+import { Link as ScrollLink } from 'react-scroll';
+
 
 export default function Home() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(prev => !prev);
+  };
+
+
   return (
     <div className="mx-auto bg-zinc-50/10 relative">
       <header className="navContainer hidden md:flex items-center justify-center fixed top-10 z-50  px-4 py-3 w-full">
@@ -14,15 +25,60 @@ export default function Home() {
         <a href="/" title="Home" className='hover:opacity-80 px-2'>
           <House strokeWidth='2' size={22} />
         </a>
-        <span className="navTrigger hover:opacity-80 px-2 cursor-pointer">
-          <Menu strokeWidth='2' size={22}/>
+        <span
+          className={`
+            navTrigger
+            hover:opacity-80
+            px-2
+            cursor-pointer
+            transition-transform duration-200 ease-in-out 
+            ${isMobileMenuOpen ? 'rotate-90' : 'rotate-0'} 
+          `}
+          onClick={toggleMobileMenu}
+        >
+          {isMobileMenuOpen ? (
+            <X strokeWidth='2' size={22} />
+          ) : (
+            <Menu strokeWidth='2' size={22} />
+          )}
         </span>
 
-        <div className="mobile-nav-menu fixed top-15 z-40">
-          menu
-        </div>
+        {isMobileMenuOpen &&
+          <div className="mobile-nav-menu fixed top-15 border-t border-zinc-200 left-0 z-55 py-4 px-7 w-full bg-white/65 backdrop-blur-lg text-zinc-700 flex flex-col gap-5">
+            <a href="https://github.com/neerajc0des" title="Github" target="_blank" rel="noopener noreferrer" className='flex items-center gap-3 text-lg'>
+              <Github strokeWidth='2' size={25} /> Github
+            </a>
+
+            <a href="http://instagram.com/neerajc0des" title="Instagram" className='flex items-center gap-3 text-lg'>
+              <Instagram strokeWidth='2' size={25} /> Instagram
+            </a>
+
+            <a href="https://www.linkedin.com/in/neerajc0des" title="Linkedin" target="_blank" rel="noopener noreferrer" className='flex items-center gap-3 text-lg'>
+              <Linkedin strokeWidth='2' size={25} /> Linkedin
+            </a>
+
+            <ScrollLink
+              to="projects"
+              spy={true}
+              smooth={true}
+              offset={-70}
+              duration={500}
+              className='cursor-pointer flex items-center gap-3 text-lg'
+              title="Projects"
+            >
+              <Sparkles strokeWidth='2' size={25} /> Projects
+            </ScrollLink>
+
+            <a href="https://hashnode.com/@neerajc0des" title="Blog" target="_blank" rel="noopener noreferrer" className='flex items-center gap-3 text-lg'>
+              <ScrollText strokeWidth='2' size={25} className='transition-all duration-200 ease-in-out' /> Blog
+            </a>
+            <Button type="button" variant={'default'} className='cursor-pointer rounded-xl py-6 min-w-[190px] text-base'>
+              <Users size={'25px'} /> Visitor notes
+            </Button>
+          </div>
+        }
       </header>
-      
+
       <div className="main-container sm:px-6 lg:px-10 relative max-w-2xl pt-[100px] sm:pt-[130px] md:pt-[150px] lg:pt-[200px] mx-auto flex flex-col justify-center px-4 gap-8">
         <div className="pfp-container w-full pt-5">
           <img src="/pfp.jpg" className="w-24 h-24 rounded-full" alt="avatar" />

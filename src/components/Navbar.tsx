@@ -48,8 +48,8 @@ const Navbar = () => {
           </ScrollLink>
 
           <a href="https://hashnode.com/@neerajc0des" title="Blog" target="_blank" rel="noopener noreferrer" className='hover:opacity-80'
-          onMouseEnter={()=>setIsBlogHover(true)}
-          onMouseLeave={()=>setIsBlogHover(false)}
+            onMouseEnter={() => setIsBlogHover(true)}
+            onMouseLeave={() => setIsBlogHover(false)}
           >
             {isBlogHover ? (
               <Scroll strokeWidth='2' size={22} className='mt-[-2px] transition-all duration-200 ease-in-out' />
