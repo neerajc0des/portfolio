@@ -17,6 +17,10 @@ export default function Home() {
 
 
   return (
+    <>
+      <div className="aura-container">
+        <div className="aura-content"></div>
+      </div>
     <div className="mx-auto bg-zinc-50/10 relative">
       <header className="navContainer hidden md:flex items-center justify-center fixed top-10 z-50  px-4 py-3 w-full">
         <Navbar />
@@ -329,7 +333,7 @@ export default function Home() {
               Let's build something real — hit me up if you're not here to waste time.
             </p>
             <div className="ctafooter">
-              <Button asChild type="button" className="cursor-pointer py-6 w-auto px-10 rounded-xl">
+              <Button asChild type="button" className="cursor-pointer py-6 w-full md:w-auto px-10 rounded-xl">
                 <a href="mailto:n33raj.kr@gmail.com">
                   <MessageCircle /> Send Message
                 </a>
@@ -348,5 +352,6 @@ export default function Home() {
         </RevealOnScroll>
       </div>
     </div>
+    </>
   );
 }

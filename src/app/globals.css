@@ -111,3 +111,61 @@ body {
   transform: translateY(-2px);
   transition: all ease-in-out 150ms;
 }
+
+
+.aura-container {
+  pointer-events: none;
+  top: 0;
+  height: calc(var(--spacing)*62);
+  width: 100%;
+  position: absolute;
+  overflow: hidden;
+
+  mask-image: linear-gradient(
+    to bottom,
+    black 0%,      
+    black 70%,    
+    transparent 100%  
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 70%,
+    transparent 100%
+  );
+}
+
+.aura-content {
+  height: 100%;
+  position: relative;
+  background: radial-gradient(
+    circle at center,
+    #ffeafc,         
+    #edebff 20%,    
+    #f1fff4 40%,    
+    #fdfff1 60%,     
+    /* #fff9e6 60%,       */
+    #ffe3e3 70%,      
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 300% 300%;
+  animation: gradientShift 25s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 0%;
+  }
+  25% {
+    background-position: 50% 100%;
+  }
+  50% {
+    background-position: 100% 0%; 
+  }
+  75% {
+    background-position: 50% 0%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
