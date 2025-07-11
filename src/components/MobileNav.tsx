@@ -49,17 +49,13 @@ const MobileNav = () => {
                     <Linkedin strokeWidth='2' size={25} /> Linkedin
                 </a>
 
-                <ScrollLink
-                    to="/projects"
-                    spy={true}
-                    smooth={true}
-                    offset={-70}
-                    duration={500}
+                <Link
+                    href="/projects"
                     className='cursor-pointer flex items-center gap-3 text-lg py-5 px-7 hover:bg-gray-50 hover:translate-x-1 transition-all duration-300 ease-in-out'
                     title="Projects"
                 >
                     <Sparkles strokeWidth='2' size={25} /> Projects
-                </ScrollLink>
+                </Link>
 
                 <a href="https://hashnode.com/@neerajc0des" title="Blog" target="_blank" rel="noopener noreferrer" className='flex items-center gap-3 text-lg py-5 px-7 hover:bg-gray-50 hover:translate-x-1 transition-all duration-300 ease-in-out'>
                     <ScrollText strokeWidth='2' size={25} className='transition-all duration-200 ease-in-out' /> Blog

@@ -30,7 +30,7 @@ const Navbar = () => {
             <Linkedin strokeWidth='2' size={22} className='group-hover:stroke-[#0077B5] transition duration-150'/>
           </a>
 
-          <a
+          <Link
             href="/projects"
             className='cursor-pointer hover:opacity-80 l-screen-nav-item'
             title="Projects"
@@ -42,7 +42,7 @@ const Navbar = () => {
             ) : (
               <Sparkles strokeWidth='2' size={22} />
             )}
-          </a>
+          </Link>
 
           <a href="https://hashnode.com/@neerajc0des" title="Blog" target="_blank" rel="noopener noreferrer" className='hover:opacity-80 l-screen-nav-item'
             onMouseEnter={() => setIsBlogHover(true)}
