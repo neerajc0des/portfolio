@@ -15,6 +15,8 @@ export default function Home() {
     setIsMobileMenuOpen(prev => !prev);
   };
 
+    const currentYear = new Date().getFullYear();
+
 
   return (
     <>
@@ -354,7 +356,7 @@ export default function Home() {
             <div className="h-px mx-auto my-5 w-[150px] lg:w-full lg:my-10 bg-zinc-200"></div>
 
             <div className="footer text-center text-sm lg:text-base text-[#A1A1AA] pb-8">
-              Copyright © 2025 Neeraj <br />
+              Copyright © {currentYear} Neeraj <br />
               All rights reserved.
             </div>
           </RevealOnScroll>
