@@ -112,6 +112,11 @@ body {
   transition: all ease-in-out 150ms;
 }
 
+.l-screen-nav-item:hover{
+  transform: translateY(-2px);
+  transition: all ease-in-out 150ms;
+}
+
 
 .aura-container {
   pointer-events: none;
