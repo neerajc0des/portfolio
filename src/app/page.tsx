@@ -1,89 +1,17 @@
-"use client"
-
-import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import React, { useState } from 'react';
 import { MessageCircle, CircleDot, Link, Github, Globe, Menu, House, X, Instagram, Linkedin, Sparkles, Users, ScrollText } from 'lucide-react'
-import { Link as ScrollLink } from 'react-scroll';
 import RevealOnScroll from "@/components/RevealOnscroll";
 
 
 export default function Home() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(prev => !prev);
-  };
-
     const currentYear = new Date().getFullYear();
 
 
   return (
     <>
-      <div className="aura-container">
-        <div className="aura-content"></div>
-      </div>
+      
       <div className="mx-auto bg-zinc-50/10 relative">
-        <header className="navContainer hidden md:flex items-center justify-center fixed top-10 z-50  px-4 py-3 w-full">
-          <Navbar />
-        </header>
-
-        <header className="flex md:hidden items-center justify-between fixed top-0 z-50  p-5 w-full border border-zinc-200 bg-white/65 backdrop-blur-lg text-zinc-700">
-          <a href="/" title="Home" className='hover:opacity-80 px-2'>
-            <House strokeWidth='2' size={22} />
-          </a>
-          <span
-            className={`
-            navTrigger
-            hover:opacity-80
-            px-2
-            cursor-pointer
-            transition-transform duration-200 ease-in-out 
-            ${isMobileMenuOpen ? 'rotate-90' : 'rotate-0'} 
-          `}
-            onClick={toggleMobileMenu}
-          >
-            {isMobileMenuOpen ? (
-              <X strokeWidth='2' size={22} />
-            ) : (
-              <Menu strokeWidth='2' size={22} />
-            )}
-          </span>
-        </header>
-        <div className={`mobile-nav-menu sm:hidden fixed ${isMobileMenuOpen ? "top-[65px] opacity-100 z-50" : "top-[40px] z-[-99]  opacity-0"} transition-all duration-300 ease-in-out left-0 right-0 pb-5 bg-white/65 backdrop-blur-lg border-b border-zinc-200 shadow-lg max-w-full overflow-hidden flex flex-col`}>
-          <a href="https://github.com/neerajc0des" title="Github" target="_blank" rel="noopener noreferrer" className='flex items-center gap-3 text-lg py-5 px-7 hover:bg-gray-50 hover:translate-x-1 transition-all duration-300 ease-in-out'>
-            <Github strokeWidth='2' size={25} /> GitHub
-          </a>
-
-          <a href="http://instagram.com/neerajc0des" title="Instagram" className='flex items-center gap-3 text-lg py-5 px-7 hover:bg-gray-50 hover:translate-x-1 transition-all duration-300 ease-in-out'>
-            <Instagram strokeWidth='2' size={25} /> Instagram
-          </a>
-
-          <a href="https://www.linkedin.com/in/neerajc0des" title="Linkedin" target="_blank" rel="noopener noreferrer" className='flex items-center gap-3 text-lg py-5 px-7 hover:bg-gray-50 hover:translate-x-1 transition-all duration-300 ease-in-out'>
-            <Linkedin strokeWidth='2' size={25} /> Linkedin
-          </a>
-
-          <ScrollLink
-            to="projects"
-            spy={true}
-            smooth={true}
-            offset={-70}
-            duration={500}
-            className='cursor-pointer flex items-center gap-3 text-lg py-5 px-7 hover:bg-gray-50 hover:translate-x-1 transition-all duration-300 ease-in-out'
-            title="Projects"
-          >
-            <Sparkles strokeWidth='2' size={25} /> Projects
-          </ScrollLink>
-
-          <a href="https://hashnode.com/@neerajc0des" title="Blog" target="_blank" rel="noopener noreferrer" className='flex items-center gap-3 text-lg py-5 px-7 hover:bg-gray-50 hover:translate-x-1 transition-all duration-300 ease-in-out'>
-            <ScrollText strokeWidth='2' size={25} className='transition-all duration-200 ease-in-out' /> Blog
-          </a>
-          <Button type="button" variant={'default'} className='cursor-pointer rounded-xl py-6 min-w-[190px] text-base'>
-            <Users size={'25px'} /> Visitor notes
-          </Button>
-        </div>
-
-
         <div className="main-container sm:px-6 lg:px-10 relative max-w-2xl pt-[100px] sm:pt-[130px] md:pt-[150px] lg:pt-[200px] mx-auto flex flex-col justify-center px-4 gap-8">
           <RevealOnScroll className="space-y-8">
             <div className="pfp-container w-full pt-5">

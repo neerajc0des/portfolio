@@ -4,6 +4,7 @@ import { House, Users, Github, Instagram, Linkedin, ScrollText, Scroll, Sparkles
 import React, { useState } from 'react'
 import { Button } from './ui/button'
 import { Link as ScrollLink } from 'react-scroll';
+import Link from 'next/link';
 
 const Navbar = () => {
   const [isSparkleHovered, setIsSparkleHovered] = useState(false);
@@ -12,9 +13,9 @@ const Navbar = () => {
   return (
     <div className='navContainer'>
       <div className="flex items-center pl-4 p-2 rounded-2xl border border-zinc-200 bg-white/65 backdrop-blur-lg text-zinc-700 w-fit ">
-        <a href="/" title="Home" className='hover:opacity-80 pl-3 l-screen-nav-item'>
+        <Link href="/" title="Home" className='hover:opacity-80 pl-3 l-screen-nav-item'>
           <House strokeWidth='2' size={22} />
-        </a>
+        </Link>
         <div className="w-px h-5 bg-zinc-200 mx-6"></div>
         <div className="space-x-8 flex items-center">
           <a href="https://github.com/neerajc0des" title="Github" target="_blank" rel="noopener noreferrer" className='hover:opacity-80 l-screen-nav-item'>
@@ -29,12 +30,8 @@ const Navbar = () => {
             <Linkedin strokeWidth='2' size={22} className='group-hover:stroke-[#0077B5] transition duration-150'/>
           </a>
 
-          <ScrollLink
-            to="projects"
-            spy={true}
-            smooth={true}
-            offset={-70}
-            duration={500}
+          <a
+            href="/projects"
             className='cursor-pointer hover:opacity-80 l-screen-nav-item'
             title="Projects"
             onMouseEnter={() => setIsSparkleHovered(true)}
@@ -45,7 +42,7 @@ const Navbar = () => {
             ) : (
               <Sparkles strokeWidth='2' size={22} />
             )}
-          </ScrollLink>
+          </a>
 
           <a href="https://hashnode.com/@neerajc0des" title="Blog" target="_blank" rel="noopener noreferrer" className='hover:opacity-80 l-screen-nav-item'
             onMouseEnter={() => setIsBlogHover(true)}
@@ -59,8 +56,8 @@ const Navbar = () => {
           </a>
         </div>
         <div className="w-px h-5 bg-zinc-200 mx-8"></div>
-        <Button type="button" variant={'default'} className='cursor-pointer rounded-xl py-6 min-w-[190px] text-base l-screen-nav-item'>
-          <Users size={'25px'} /> Visitor notes
+        <Button asChild type="button" variant={'default'} className='cursor-pointer rounded-xl py-6 min-w-[190px] text-base l-screen-nav-item'>
+          <Link href="/visitors"><Users size={'25px'} /> Visitors</Link>
         </Button>
       </div>
     </div>
