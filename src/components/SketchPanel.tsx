@@ -1,8 +1,8 @@
 "use client"
 import React, { useState, useRef } from 'react';
-import { ReactSketchCanvas } from 'react-sketch-canvas';
+import { ReactSketchCanvas, ReactSketchCanvasRef } from 'react-sketch-canvas';
 import { Slider } from "@/components/ui/slider"
-import { CirclePicker } from 'react-color';
+import { CirclePicker, ColorResult } from 'react-color';
 import { Button } from './ui/button';
 import { Circle, CircleDot, Eraser, Redo, Trash, Undo } from 'lucide-react';
 
@@ -19,10 +19,10 @@ const predefinedColors = [
 
 
 const SketchPanel = () => {
-    const canvasRef = useRef(null);
+    const canvasRef = useRef<ReactSketchCanvasRef>(null);
     const [brushColor, setBrushColor] = useState(predefinedColors[0]);
     const [showBrushSlider, setShowBrushSlider] = useState(false);
-    const [brushRadius, setBrushRadius] = useState(5);
+    const [brushRadius, setBrushRadius] = useState<number>(5);
     const [isErasing, setIsErasing] = useState(false);
 
 
@@ -30,7 +30,7 @@ const SketchPanel = () => {
         setShowBrushSlider(prev => !prev);
     };
 
-    const handleChangeColor = (color:string) => {
+    const handleChangeColor = (color: ColorResult) => {
         setBrushColor(color.hex);
     };
 
