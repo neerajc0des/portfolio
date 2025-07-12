@@ -129,13 +129,13 @@ body {
   mask-image: linear-gradient(
     to bottom,
     black 0%,      
-    black 70%,    
+    black 50%,    
     transparent 100%  
   );
   -webkit-mask-image: linear-gradient(
     to bottom,
     black 0%,
-    black 70%,
+    black 50%,
     transparent 100%
   );
 }
@@ -144,16 +144,15 @@ body {
   height: 100%;
   position: relative;
   background: radial-gradient(
-    circle at center,
+    circle at bottom,
     #ffeafc,         
-    #edebff 20%,    
-    #f1fff4 40%,    
-    #fdfff1 60%,     
-    /* #fff9e6 60%,       */
-    #ffe3e3 70%,      
+    #edebffc7 20%,    
+    #f1fff4c0 30%,    
+    #fdfff1 40%,     
+    #ffe3e3 60%,      
     rgba(255, 255, 255, 0) 100%
   );
-  background-size: 300% 300%;
+  background-size: 300% 200%;
   animation: gradientShift 25s ease infinite;
 }
 
