@@ -1,16 +1,17 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { MessageCircle, CircleDot, Link, Github, Globe, Menu, House, X, Instagram, Linkedin, Sparkles, Users, ScrollText } from 'lucide-react'
+import { MessageCircle, CircleDot, LinkIcon, Github, Globe, Menu, House, X, Instagram, Linkedin, Sparkles, Users, ScrollText, ArrowUpRight } from 'lucide-react'
 import RevealOnScroll from "@/components/RevealOnscroll";
+import Link from 'next/link';
+
 
 
 export default function Home() {
-    const currentYear = new Date().getFullYear();
 
 
   return (
     <>
-      
+
       <div className="mx-auto bg-zinc-50/10 relative">
         <div className="main-container sm:px-6 lg:px-10 relative max-w-2xl pt-[100px] sm:pt-[130px] md:pt-[150px] lg:pt-[200px] mx-auto flex flex-col justify-center px-4 gap-8">
           <RevealOnScroll className="space-y-8">
@@ -107,7 +108,7 @@ export default function Home() {
                 </div>
                 <div className="skill-item shadow-xs flex flex-col items-center gap-3 border rounded-md p-2 group">
                   <span className="icon-container w-full flex justify-center">
-                    <img src="/zustlandIcon.svg" width="30px" alt="zustland icon" className="skill-icon" />
+                    <img src="/zustlandIcon.svg" width="25px" alt="zustland icon" className="skill-icon" />
                   </span>
                   <span className="skill-name text-muted text-xs hidden md:block">Zustland</span>
                 </div>
@@ -135,7 +136,7 @@ export default function Home() {
                     <p className="text-paragraph">Co-Founder at</p>
                     <Button asChild className="cursor-pointer bg-[#FFF2CD] hover:bg-[#FFF2CD] border border-[#EDCD79] text-[#E18433] hover:shadow-sm">
                       <a href="https://29bytes.com" target="_blank" rel="noopener noreferrer">
-                        <Link /> 29 Bytes
+                        <LinkIcon /> 29 Bytes
                       </a>
                     </Button>
                   </div>
@@ -147,7 +148,7 @@ export default function Home() {
                     <p className="text-paragraph">Frontend Dev at</p>
                     <Button asChild className="cursor-pointer bg-[#F7EFFF] hover:bg-[#F7EFFF] border border-[#efbfff] text-[#8A429E] hover:shadow-sm">
                       <a href="https://primegurukul.com/" target="_blank" rel="noopener noreferrer">
-                        <Link /> PrimeGurukul
+                        <LinkIcon /> PrimeGurukul
                       </a>
                     </Button>
                   </div>
@@ -172,7 +173,7 @@ export default function Home() {
             </RevealOnScroll>
             <RevealOnScroll>
               <div className="proj1 p-2 lg:p-5 border border-zinc-200 rounded-md mx-2 lg:mx-5">
-                <div className="projImg relative w-[100%] h-[250px] md:h-[300px] border border-zinc-200 lg:h-[335px] rounded-md overflow-hidden">
+                <div className="projImg relative w-[100%] h-[150px] sm:h-[200px] md:h-[250px] border border-zinc-200 lg:h-[335px] rounded-md overflow-hidden">
                   <Image fill className="object-cover object-top w-full h-full" src={'/weatherProjectScreenshot.png'} alt="weather project" />
                 </div>
                 <div className="projContent space-y-2">
@@ -200,11 +201,9 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </RevealOnScroll>
 
-            <RevealOnScroll>
-              <div className="proj2 p-2 lg:p-5 border border-zinc-200 rounded-md mx-2 lg:mx-5">
-                <div className="projImg relative w-[100%] h-[250px] md:h-[300px] border border-zinc-200 lg:h-[335px] rounded-md overflow-hidden">
+              <div className="proj2 p-2 lg:p-5 border border-zinc-200 rounded-md mx-2 lg:mx-5 mt-5">
+                <div className="projImg relative w-[100%] h-[150px] sm:h-[200px] md:h-[250px] border border-zinc-200 lg:h-[335px] rounded-md overflow-hidden">
                   <Image fill className="object-cover object-top w-full h-full" src={'/29bytesScreenshot.png'} alt="weather project" />
                 </div>
                 <div className="projContent space-y-2">
@@ -229,38 +228,18 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </RevealOnScroll>
 
-            <RevealOnScroll>
-              <div className="proj3 p-2 lg:p-5 border border-zinc-200 rounded-md mx-2 lg:mx-5">
-                <div className="projImg relative w-[100%] h-[250px] md:h-[300px] border border-zinc-200 lg:h-[335px] rounded-md overflow-hidden">
-                  <Image fill className="object-cover object-top w-full h-full" src={'/inkxScreenshot.png'} alt="weather project" />
-                </div>
-                <div className="projContent space-y-2">
-                  <h1 className="text-base lg:text-lg mt-5 font-semibold">Inkx</h1>
-                  <p className="text-sm text-paragraph">
-                    Inkx was my take on building a modern art shop — selling paintings, portraits, bookmarks, and more. Inspired by my sister's talent, the idea was to turn her art into an online brand. I designed and built the frontend with a clean, aesthetic vibe to match the products.
-                    The project's on pause (thanks, exams) — but it's still one of my favorite starts.
-                  </p>
-                  <div className="tagContainer flex flex-wrap items-center gap-2 mt-2 lg:mt-5">
-                    <span className="bg-border text-primary py-1 px-4 rounded-md text-xs lg:text-sm">Next js</span>
-                    <span className="bg-border text-primary py-1 px-4 rounded-md text-xs lg:text-sm">Shadcn</span>
-                    <span className="bg-border text-primary py-1 px-4 rounded-md text-xs lg:text-sm">Tailwind css</span>
-                  </div>
-                  <div className="cta-container space-x-2 mt-2 lg:mt-5">
-                    <Button type="button" variant="outline" disabled className="cursor-pointer">
-                      <Github /> Source
-                    </Button>
-                    <Button asChild type="button" variant="default" className="cursor-pointer">
-                      <a href="https://inkx-ecom.vercel.app" target="_blank" rel="noopener noreferrer">
-                        <Globe /> Visit
-                      </a>
-                    </Button>
-                  </div>
-                </div>
+              <div className="viewAll text-left pt-5 mx-2">
+                <Button asChild type="button" variant={"ghost"} className='cursor-pointer w-auto'>
+                  <Link
+                    href="/projects"
+                    className='cursor-pointer hover:opacity-80 l-screen-nav-item font-semibold underline'
+                  >
+                    More Projects <ArrowUpRight />
+                  </Link>
+                </Button>
               </div>
             </RevealOnScroll>
-
           </section>
 
           <div className="h-px mx-auto my-5 w-[150px] lg:w-full lg:my-10 bg-zinc-200"></div>
@@ -283,10 +262,7 @@ export default function Home() {
 
             <div className="h-px mx-auto my-5 w-[150px] lg:w-full lg:my-10 bg-zinc-200"></div>
 
-            <div className="footer text-center text-sm lg:text-base text-[#A1A1AA] pb-8">
-              Copyright © {currentYear} Neeraj <br />
-              All rights reserved.
-            </div>
+            
           </RevealOnScroll>
         </div>
       </div>

@@ -48,6 +48,10 @@ export default function RootLayout({
         </header>
         <MobileNav />
         {children}
+        <div className="footer text-center text-sm lg:text-base text-[#A1A1AA] pt-5 pb-8">
+              Copyright © {new Date().getFullYear()} Neeraj <br />
+              All rights reserved.
+            </div>
       </body>
     </html>
   );
