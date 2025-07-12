@@ -4,6 +4,18 @@ import SketchPanel from '@/components/SketchPanel'
 import { Button } from '@/components/ui/button'
 import { LayoutGrid, Plus, SquareDashedMousePointer } from 'lucide-react'
 import React, { useEffect, useState, useRef } from 'react'
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 
 const notesData = [
     {
@@ -44,6 +56,7 @@ const notesData = [
 ]
 
 const Visitors = () => {
+    const [isAddNoteDialogOpen, setIsAddNoteDialogOpen] = useState(false)
     const [notesView, setNotesView] = useState("grid");
     const [notesWithRandomRotation, setNotesWithRandomRotation] = useState([{
         imgUrl: "/noteThumb.jpg",
@@ -81,7 +94,6 @@ const Visitors = () => {
     return (
         <div className='mx-auto bg-zinc-50/10'>
             <div className="main-container sm:px-6 lg:px-10 relative max-w-2xl pt-[100px] sm:pt-[130px] md:pt-[150px] lg:pt-[200px] mx-auto flex flex-col justify-center px-4 gap-8">
-                <SketchPanel/>
                 <div className="wrapper border border-zinc-300 rounded-sm shadow-sm w-full relative">
                     <div className="notesNav p-2 w-full z-40 bg-zinc-200/50 border-b border-zinc-200 rounded-t-sm flex items-center justify-between backdrop-blur-lg absolute top-0">
                         <div className="leftNav flex gap-5 items-center">
@@ -95,7 +107,7 @@ const Visitors = () => {
                             </div>
                         </div>
                         <div className="navRight">
-                            <Button type='button' className='cursor-pointer py-5'><Plus /> Leave a note</Button>
+                            <Button type='button' className='cursor-pointer py-5' onClick={() => setIsAddNoteDialogOpen(true)}><Plus /> Leave a note</Button>
                         </div>
                     </div>
 
@@ -136,6 +148,30 @@ const Visitors = () => {
                         }
                     </div>
                 </div>
+
+                <Dialog open={isAddNoteDialogOpen} onOpenChange={setIsAddNoteDialogOpen}>
+                    <DialogTitle></DialogTitle>
+                    <DialogContent className="w-fit p-2 max-h-[calc(100dvh-1rem)] overflow-y-auto">
+                            <SketchPanel />
+                            <div className="space-y-2">
+                                <Input name='name' id='name' placeholder='Name' className='text-xs border-zinc-300 font-mono'/>
+                            </div>
+                            <div className="space-y-2">
+                                <Input name='note' id='note' placeholder='Type your note...' className='text-xs border-zinc-300 font-mono'/>
+                            </div>
+                        <DialogFooter className="justify-end">
+                            <DialogClose asChild>
+                                <Button type="button" variant="outline" className='cursor-pointer'>
+                                    Close
+                                </Button>
+                            </DialogClose>
+                            <Button type="button" variant="default" className='cursor-pointer border border-zinc-300'>
+                                Save
+                            </Button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+
             </div>
         </div>
     )

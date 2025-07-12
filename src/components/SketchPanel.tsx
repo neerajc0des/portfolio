@@ -63,16 +63,16 @@ const SketchPanel = () => {
 
     return (
         <div className='w-full'>
-            <div className='controls bg-white w-full flex items-center justify-between p-2 relative'>
+            <div className='controls bg-white w-full flex items-center justify-between  relative'>
                 <CirclePicker
                     colors={predefinedColors}
                     color={brushColor}
                     onChangeComplete={handleChangeColor}
-                    width='400px'
+                    width='240px'
                     circleSize={18}
                     circleSpacing={12}
                 />
-                <div className="flex gap-0 items-center tools">
+                <div className="flex gap-0 items-center tools justify-end">
                     <Button
                         onClick={handleUndo}
                         className="p-2 hover:bg-primary/0 hover:text-primary/60 cursor-pointer"
@@ -126,6 +126,7 @@ const SketchPanel = () => {
                     <span className="text-gray-700 text-xs font-medium">{brushRadius}px</span>
                 </div>
             </div>
+            <div className="canvasContainer overflow-hidden w-full rounded-sm">
             <ReactSketchCanvas
                 ref={canvasRef}
                 strokeColor={brushColor}
@@ -133,8 +134,9 @@ const SketchPanel = () => {
                 eraserWidth={brushRadius}
                 canvasColor={"#e7e7e7"}
                 height={"400px"}
-                style={{ border: '0px ', }}
+                style={{ border: '0px transparent'}}
             />
+            </div>
         </div>
     )
 }
