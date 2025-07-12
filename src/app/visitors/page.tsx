@@ -1,5 +1,6 @@
 "use client"
 import NoteCard from '@/components/NoteCard'
+import SketchPanel from '@/components/SketchPanel'
 import { Button } from '@/components/ui/button'
 import { LayoutGrid, Plus, SquareDashedMousePointer } from 'lucide-react'
 import React, { useEffect, useState, useRef } from 'react'
@@ -80,6 +81,7 @@ const Visitors = () => {
     return (
         <div className='mx-auto bg-zinc-50/10'>
             <div className="main-container sm:px-6 lg:px-10 relative max-w-2xl pt-[100px] sm:pt-[130px] md:pt-[150px] lg:pt-[200px] mx-auto flex flex-col justify-center px-4 gap-8">
+                <SketchPanel/>
                 <div className="wrapper border border-zinc-300 rounded-sm shadow-sm w-full relative">
                     <div className="notesNav p-2 w-full z-40 bg-zinc-200/50 border-b border-zinc-200 rounded-t-sm flex items-center justify-between backdrop-blur-lg absolute top-0">
                         <div className="leftNav flex gap-5 items-center">
