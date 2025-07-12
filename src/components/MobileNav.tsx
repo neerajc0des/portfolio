@@ -36,7 +36,7 @@ const MobileNav = () => {
                     )}
                 </span>
             </header>
-            <div className={`mobile-nav-menu md:hidden fixed ${isMobileMenuOpen ? "top-[65px] opacity-100 z-50" : "top-[40px] z-[-99]  opacity-0"} transition-all duration-300 ease-in-out left-0 right-0 pb-5 bg-white/65 backdrop-blur-lg border-b border-zinc-200 shadow-lg max-w-full overflow-hidden flex flex-col`}>
+            <div className={`mobile-nav-menu md:hidden fixed ${isMobileMenuOpen ? "top-[65px] opacity-100 z-50" : "top-[40px]   opacity-0"} transition-all duration-300 ease-in-out left-0 right-0 pb-5 bg-white/65 backdrop-blur-lg border-b border-zinc-200 shadow-lg max-w-full overflow-hidden flex flex-col`}>
                 <a href="https://github.com/neerajc0des" title="Github" target="_blank" rel="noopener noreferrer" className='flex items-center gap-3 text-lg py-5 px-7 hover:bg-gray-50 hover:translate-x-1 transition-all duration-300 ease-in-out'>
                     <Github strokeWidth='2' size={25} /> GitHub
                 </a>

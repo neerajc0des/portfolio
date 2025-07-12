@@ -22,7 +22,7 @@ const Visitors = () => {
         })
     }
 
-    const getRandomRotation = (min = -4, max = 4) => {
+    const getRandomRotation = (min = -3, max = 3) => {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     };
 
@@ -75,7 +75,7 @@ const Visitors = () => {
     ]
 
     return (
-        <div className='mx-auto bg-zinc-50/10 relative z-40'>
+        <div className='mx-auto bg-zinc-50/10 relative '>
             <div className="main-container sm:px-6 lg:px-10 relative max-w-2xl pt-[100px] sm:pt-[130px] md:pt-[150px] lg:pt-[200px] mx-auto flex flex-col justify-center px-4 gap-8">
                 <div className="wrapper border border-zinc-200 rounded-sm shadow-sm w-full">
                     <div className="notesNav p-2 bg-zinc-100 border-b border-zinc-200 rounded-t-sm flex items-center justify-between">
