@@ -30,7 +30,7 @@ const SketchPanel = () => {
         setShowBrushSlider(prev => !prev);
     };
 
-    const handleChangeColor = (color) => {
+    const handleChangeColor = (color:string) => {
         setBrushColor(color.hex);
     };
 
