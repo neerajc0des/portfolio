@@ -53,6 +53,7 @@ const MobileNav = () => {
                     href="/projects"
                     className='cursor-pointer flex items-center gap-3 text-lg py-5 px-7 hover:bg-gray-50 hover:translate-x-1 transition-all duration-300 ease-in-out'
                     title="Projects"
+                    onClick={()=>setIsMobileMenuOpen(false)}
                 >
                     <Sparkles strokeWidth='2' size={25} /> Projects
                 </Link>
@@ -61,7 +62,7 @@ const MobileNav = () => {
                     <ScrollText strokeWidth='2' size={25} className='transition-all duration-200 ease-in-out' /> Blog
                 </a>
                 <Button asChild type="button" variant={'default'} className='cursor-pointer rounded-xl py-6 w-auto mx-7 text-base hover:translate-x-1 transition-all duration-300 ease-in-out'>
-                    <Link href="/visitors"><Users size={'25px'} /> Visitors</Link>
+                    <Link href="/visitors" onClick={()=>setIsMobileMenuOpen(false)}><Users size={'25px'} /> Visitors</Link>
                 </Button>
             </div>
         </>
