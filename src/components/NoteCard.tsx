@@ -8,7 +8,7 @@ interface NoteCardProps {
     initialRotation: number;
 }
 
-const NoteCard = ({ imgUrl, name, desc, initialRotation }) => {
+const NoteCard = ({ imgUrl, name, desc, initialRotation }:NoteCardProps) => {
     const [isHovered, setIsHovered] = useState(false);
 
     
