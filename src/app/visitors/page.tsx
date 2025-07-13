@@ -133,7 +133,7 @@ const Visitors = () => {
             <div className="main-container sm:px-6 lg:px-10 relative max-w-2xl pt-[100px] sm:pt-[130px] md:pt-[150px] lg:pt-[200px] mx-auto flex flex-col justify-center px-4 gap-8">
                 <div className="wrapper border border-zinc-300 rounded-sm shadow-sm w-full relative">
                     <div className="notesNav p-2 w-full z-40 bg-zinc-200/50 border-b border-zinc-200 rounded-t-sm flex items-center justify-between backdrop-blur-lg absolute top-0">
-                        <div className="leftNav flex gap-5 items-center">
+                        <div className="leftNav flex gap-5 items-center z-[9990]">
                             <Button type='button' variant={"ghost"} onClick={handleViewToggle} className='border border-zinc-300 hover:bg-zinc-300 cursor-pointer hover:text-primary/80 rounded-sm text-primary p-2 w-[40px] h-[40px]'>{notesView == "board" ? <LayoutGrid /> : <SquareDashedMousePointer />}</Button>
                             <div className="activeUsers flex items-center gap-3">
                                 <span>1</span>
