@@ -30,6 +30,10 @@ const SketchPanel = () => {
     };
 
     const handleChangeColor = (color: ColorResult) => {
+        if (canvasRef.current) {
+            canvasRef.current.eraseMode(false);
+        }
+        setIsErasing(false);
         setBrushColor(color.hex);
     };
 
