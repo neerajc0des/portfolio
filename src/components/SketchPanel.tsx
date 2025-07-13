@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ReactSketchCanvas, ReactSketchCanvasRef } from 'react-sketch-canvas';
 import { Slider } from "@/components/ui/slider"
 import { CirclePicker, ColorResult } from 'react-color';
@@ -19,10 +19,32 @@ const predefinedColors = [
 
 const SketchPanel = () => {
     const canvasRef = useRef<ReactSketchCanvasRef>(null);
+    const sliderBoxRef = useRef<HTMLDivElement>(null);
     const [brushColor, setBrushColor] = useState(predefinedColors[0]);
     const [showBrushSlider, setShowBrushSlider] = useState(false);
     const [brushRadius, setBrushRadius] = useState<number>(5);
     const [isErasing, setIsErasing] = useState(false);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+          if (
+            sliderBoxRef.current &&
+            !sliderBoxRef.current.contains(event.target as Node)
+          ) {
+            setShowBrushSlider(false);
+          }
+        };
+    
+        if (showBrushSlider) {
+          document.addEventListener("mousedown", handleClickOutside);
+        } else {
+          document.removeEventListener("mousedown", handleClickOutside);
+        }
+    
+        return () => {
+          document.removeEventListener("mousedown", handleClickOutside);
+        };
+      }, [showBrushSlider]);
 
 
     const handleBrushIconClick = () => {
@@ -120,7 +142,7 @@ const SketchPanel = () => {
                         <CircleDot />
                     </Button>
                 </div>
-                <div className={`sliderContainer ${showBrushSlider ? "block" : "hidden"} absolute top-[30px] border-zinc-300 border rounded-sm right-0 w-[150px] h-[120px] p-5 bg-zinc-100 flex flex-col justify-between items-center`}>
+                <div ref={sliderBoxRef} className={`sliderContainer ${showBrushSlider ? "block" : "hidden"} absolute top-[30px] border-zinc-300 border rounded-sm right-0 w-[150px] h-[120px] p-5 bg-zinc-100 flex flex-col justify-between items-center`}>
                     <Slider
                         value={[brushRadius]}
                         onValueChange={([val]) => setBrushRadius(val)}
