@@ -62,12 +62,12 @@ const SketchPanel = () => {
 
     return (
         <div className='w-full'>
-            <div className='controls w-full flex items-center justify-between  relative'>
+            <div className='controls w-full flex items-center justify-between pb-1 relative'>
                 <CirclePicker
                     colors={predefinedColors}
                     color={brushColor}
                     onChangeComplete={handleChangeColor}
-                    width='150px'
+                    width='160px'
                     circleSize={16}
                     circleSpacing={5}
                 />
@@ -104,6 +104,7 @@ const SketchPanel = () => {
                         onClick={handleEraserClick}
                     >
                         <Eraser />
+                        {isErasing && <span className="absolute top-[35px] bg-zinc-50 rounded-sm shadow-sm p-1 text-primary left-2 text-xs">Eraser active</span>}
                     </Button>
 
                     <Button
@@ -115,7 +116,7 @@ const SketchPanel = () => {
                         <CircleDot />
                     </Button>
                 </div>
-                <div className={`sliderContainer ${showBrushSlider ? "block" : "hidden"} absolute top-[53px] border-zinc-300 border border-t-0 rounded-b-sm right-0 w-[150px] h-[120px] p-5 bg-zinc-100 flex flex-col justify-between items-center`}>
+                <div className={`sliderContainer ${showBrushSlider ? "block" : "hidden"} absolute top-[30px] border-zinc-300 border rounded-sm right-0 w-[150px] h-[120px] p-5 bg-zinc-100 flex flex-col justify-between items-center`}>
                     <Slider
                         value={[brushRadius]}
                         onValueChange={([val]) => setBrushRadius(val)}
