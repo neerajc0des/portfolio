@@ -17,36 +17,36 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-import { db } from '@/lib/firebase';
+import { dbFirestore } from '@/lib/firebase';
 import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from 'firebase/firestore';
 
-const notesData = [
-    {
-        imgUrl: "/noteThumb300x300.png",
-        name: "Tyson",
-        desc: "Awesome portfolio!"
-    },
-    {
-        imgUrl: "/noteThumb300x300.png",
-        name: "Mark T.",
-        desc: "Great attention to detail!"
-    },
-    {
-        imgUrl: "/noteThumb300x300.png",
-        name: "Alex P.",
-        desc: "Real-time user feature is 💯"
-    },
-    {
-        imgUrl: "/noteThumb300x300.png",
-        name: "Olivia M.",
-        desc: "Sleek, modern, functional."
-    },
-    {
-        imgUrl: "/noteThumb300x300.png",
-        name: "Daniel S.",
-        desc: "Clever notes section."
-    }
-];
+// const notesData = [
+//     {
+//         imgUrl: "/noteThumb300x300.png",
+//         name: "Tyson",
+//         desc: "Awesome portfolio!"
+//     },
+//     {
+//         imgUrl: "/noteThumb300x300.png",
+//         name: "Mark T.",
+//         desc: "Great attention to detail!"
+//     },
+//     {
+//         imgUrl: "/noteThumb300x300.png",
+//         name: "Alex P.",
+//         desc: "Real-time user feature is 💯"
+//     },
+//     {
+//         imgUrl: "/noteThumb300x300.png",
+//         name: "Olivia M.",
+//         desc: "Sleek, modern, functional."
+//     },
+//     {
+//         imgUrl: "/noteThumb300x300.png",
+//         name: "Daniel S.",
+//         desc: "Clever notes section."
+//     }
+// ];
 
 interface VisitorNote {
     id?: string;
@@ -63,6 +63,7 @@ const Visitors = () => {
     const sketchPanelRef = useRef<SketchPanelHandle>(null);
     const [isAddNoteDialogOpen, setIsAddNoteDialogOpen] = useState(false)
     const [notesView, setNotesView] = useState("grid");
+    const [activeUsers, setActiveUsers] = useState(0);
     const [notes, setNotes] = useState<VisitorNote[]>([
         {
             imgUrl: "/noteThumb300x300.png",
@@ -95,7 +96,7 @@ const Visitors = () => {
     // console.log(newNoteState);
 
     useEffect(() => {
-        const q = query(collection(db, 'visitorNotes'), orderBy('timestamp', 'desc'));
+        const q = query(collection(dbFirestore, 'visitorNotes'), orderBy('timestamp', 'desc'));
 
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const fetchedNotes: VisitorNote[] = [];
@@ -138,7 +139,7 @@ const Visitors = () => {
                 initialY: Math.floor(Math.random() * 400),
             };
 
-            await addDoc(collection(db, 'visitorNotes'), newNote);
+            await addDoc(collection(dbFirestore, 'visitorNotes'), newNote);
 
             setIsAddNoteDialogOpen(false);
             setNewNoteState({ name: "", desc: "", imgUrl: null });
