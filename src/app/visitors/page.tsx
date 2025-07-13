@@ -153,7 +153,7 @@ const Visitors = () => {
 
                         {notesView == "grid" ?
                             <div className="gridViewNotesWrapper grid grid-cols-2 justify-self-between sm:grid-cols-3 gap-5 p-5 pt-[5rem] overflow-hidden w-full">
-                                {notesWithRandomRotation.map((note, idx) => {
+                                {notesWithRandomRotation.slice().reverse().map((note, idx) => {
                                     return (
                                         <NoteCard key={idx}
                                             imgUrl={note.imgUrl}
