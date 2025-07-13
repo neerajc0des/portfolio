@@ -12,14 +12,22 @@ const predefinedColors = [
     '#80D880', // Medium Spring Green (Lively but still soft green)
     '#fff', // Soft White (for highlights or 'erasing' to background)
     '#303030', // Deep Charcoal (Strong, dark neutral for outlines)
+    '#F1C27D', // face
     '#64B5F6', // Cerulean Blue (Clear, vibrant blue)
+    '#FFB7C5',
     '#B39DDB', // Amethyst (Rich, muted purple)
+    '#795548', // Brown (Earth tone)
+    'rgba(255, 255, 255, 0.5)', //semilight white
+    'rgba(255, 0, 0, 0.5)', //tranaslucent red
+    'rgba(0, 128, 0, 0.5)', // translucent green
+    'rgba(0, 0, 0, 0.5)', // translucent black
+
 ];
 
 export interface SketchPanelHandle {
     exportDrawing: () => Promise<string>;
 }
-  
+
 interface SketchPanelProps {
     onImgExport: (imageData: string) => void;
 }
@@ -34,24 +42,24 @@ const SketchPanel = forwardRef<SketchPanelHandle>((_props, ref) => {
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-          if (
-            sliderBoxRef.current &&
-            !sliderBoxRef.current.contains(event.target as Node)
-          ) {
-            setShowBrushSlider(false);
-          }
+            if (
+                sliderBoxRef.current &&
+                !sliderBoxRef.current.contains(event.target as Node)
+            ) {
+                setShowBrushSlider(false);
+            }
         };
-    
+
         if (showBrushSlider) {
-          document.addEventListener("mousedown", handleClickOutside);
+            document.addEventListener("mousedown", handleClickOutside);
         } else {
-          document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("mousedown", handleClickOutside);
         }
-    
+
         return () => {
-          document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("mousedown", handleClickOutside);
         };
-      }, [showBrushSlider]);
+    }, [showBrushSlider]);
 
 
     const handleBrushIconClick = () => {
@@ -63,7 +71,14 @@ const SketchPanel = forwardRef<SketchPanelHandle>((_props, ref) => {
             canvasRef.current.eraseMode(false);
         }
         setIsErasing(false);
-        setBrushColor(color.hex);
+        let newBrushColor;
+        if (color.rgb.a !== undefined && color.rgb.a < 1) {
+            newBrushColor = `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`;
+        } else {
+            newBrushColor = color.hex;
+        }
+
+        setBrushColor(newBrushColor);
     };
 
     const handleUndo = () => {
@@ -93,39 +108,31 @@ const SketchPanel = forwardRef<SketchPanelHandle>((_props, ref) => {
         }
     };
 
-    // const handleExportImage = async () => {
-    //     if (canvasRef.current) {
-    //         try {
-    //             const imageData = await canvasRef.current.exportImage('png'); 
-    //             onImgExport(imageData); 
-    //             console.log("Sketch exported:", imageData.substring(0, 50) + "...");
-    //         } catch (error) {
-    //             console.error("Failed to export image:", error);
-    //         }
-    //     }
-    // };
-
     useImperativeHandle(ref, () => ({
         exportDrawing: async () => {
-          if (canvasRef.current) {
-            const imageData = await canvasRef.current.exportImage('png');
-            return imageData;
-          }
-          throw new Error("Canvas not ready");
+            if (canvasRef.current) {
+                const imageData = await canvasRef.current.exportImage('png');
+                return imageData;
+            }
+            throw new Error("Canvas not ready");
         }
-      })); 
+    }));
 
     return (
         <div className='w-full'>
             <div className='controls w-full flex items-center justify-between pb-1 relative'>
-                <CirclePicker
-                    colors={predefinedColors}
-                    color={brushColor}
-                    onChangeComplete={handleChangeColor}
-                    width='160px'
-                    circleSize={16}
-                    circleSpacing={5}
-                />
+                <div className="colorPickerContainer w-[170px] overflow-x-auto py-2 pl-2 whitespace-nowrap no-scrollbar">
+                    <CirclePicker
+                        colors={predefinedColors}
+                        color={brushColor}
+                        onChangeComplete={handleChangeColor}
+                        width='370px'
+                        circleSize={16}
+                        circleSpacing={10}
+
+                    />
+                </div>
+                <div className="separator w-px h-[15px] bg-zinc-400/80 mx-2 rounded-sm"></div>
                 <div className="flex gap-0 items-center tools justify-end">
                     <Button
                         onClick={handleUndo}
