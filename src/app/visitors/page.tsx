@@ -1,6 +1,6 @@
 "use client"
 import NoteCard from '@/components/NoteCard'
-import SketchPanel from '@/components/SketchPanel'
+import SketchPanel, { SketchPanelHandle } from '@/components/SketchPanel'
 import { Button } from '@/components/ui/button'
 import { LayoutGrid, Plus, SquareDashedMousePointer } from 'lucide-react'
 import React, { useEffect, useState, useRef } from 'react'
@@ -19,53 +19,83 @@ import { Label } from "@/components/ui/label"
 
 const notesData = [
     {
-        imgUrl: "/noteThumb.jpg",
+        imgUrl: "/noteThumb300x300.png",
         name: "Tyson",
-        desc: "A very cool portfolio, I'll copy this!"
+        desc: "Awesome portfolio!"
     },
     {
-        imgUrl: "/noteThumb.jpg",
+        imgUrl: "/noteThumb300x300.png",
         name: "Mark T.",
-        desc: "Fantastic attention to detail. This portfolio really stands out!"
+        desc: "Great attention to detail!"
     },
     {
-        imgUrl: "/noteThumb.jpg",
+        imgUrl: "/noteThumb300x300.png",
         name: "Alex P.",
-        desc: "The real-time user feature is a brilliant touch. Great job!"
+        desc: "Real-time user feature is 💯"
     },
     {
-        imgUrl: "/noteThumb.jpg",
-        name: "Emily R.",
-        desc: "So impressed with the creativity and execution. A true masterclass."
-    },
-    {
-        imgUrl: "/noteThumb.jpg",
-        name: "Chris L.",
-        desc: "This is exactly what I needed to see for inspiration. Thank you!"
-    },
-    {
-        imgUrl: "/noteThumb.jpg",
+        imgUrl: "/noteThumb300x300.png",
         name: "Olivia M.",
-        desc: "Sleek, modern, and highly functional. Excellent work!"
+        desc: "Sleek, modern, functional."
     },
     {
-        imgUrl: "/noteThumb.jpg",
+        imgUrl: "/noteThumb300x300.png",
         name: "Daniel S.",
-        desc: "The notes section is a clever idea, very well implemented."
+        desc: "Clever notes section."
     }
-]
+];
 
 const Visitors = () => {
+    const sketchPanelRef = useRef<SketchPanelHandle>(null);
     const [isAddNoteDialogOpen, setIsAddNoteDialogOpen] = useState(false)
     const [notesView, setNotesView] = useState("grid");
     const [notesWithRandomRotation, setNotesWithRandomRotation] = useState([{
-        imgUrl: "/noteThumb.jpg",
-        name: "Tyson",
-        desc: "A very cool portfolio, I'll copy this!",
+        imgUrl: "/noteThumb300x300.png",
+        name: "Automated",
+        desc: "Notes section working cool!",
         initialRotation: 0,
         initialX: 0,
         initialY: 0
     }])
+
+    const [newNoteState, setNewNoteState] = useState<{
+        name: string;
+        desc: string;
+        imgUrl: string | null;
+    }>({
+        name: "",
+        desc: "",
+        imgUrl: "",
+    });
+
+    // console.log(newNoteState);
+
+
+    const handleSaveNote = async () => {
+        if (!sketchPanelRef.current) return;
+
+        try {
+            const img = await sketchPanelRef.current.exportDrawing();
+            const newNote = {
+                ...newNoteState,
+                imgUrl: img,
+                initialRotation: getRandomRotation(),
+                initialX: Math.floor(Math.random() * 300),
+                initialY: Math.floor(Math.random() * 400),
+            };
+
+            setNotesWithRandomRotation((prev) => {
+                const updated = [...prev, newNote];
+                localStorage.setItem("visitorNotes", JSON.stringify(updated));
+                return updated;
+            });
+            setIsAddNoteDialogOpen(false);
+            setNewNoteState({ name: "", desc: "", imgUrl: null });
+        } catch (err) {
+            console.error("Something went wrong", err);
+        }
+    };
+
 
     const handleViewToggle = () => {
         setNotesView((curView: string) => {
@@ -81,13 +111,20 @@ const Visitors = () => {
     };
 
     useEffect(() => {
-        const notes = notesData.map(note => ({
-            ...note,
-            initialRotation: getRandomRotation(),
-            initialX: Math.floor(Math.random() * 300),
-            initialY: Math.floor(Math.random() * 400),
-        }));
-        setNotesWithRandomRotation(notes);
+        const storedNotes = localStorage.getItem("visitorNotes");
+        if (storedNotes) {
+            setNotesWithRandomRotation(JSON.parse(storedNotes));
+        }
+        else {
+            const initialNotes = notesData.map(note => ({
+                ...note,
+                initialRotation: getRandomRotation(),
+                initialX: Math.floor(Math.random() * 300),
+                initialY: Math.floor(Math.random() * 400),
+            }));
+            setNotesWithRandomRotation(initialNotes);
+            localStorage.setItem("visitorNotes", JSON.stringify(initialNotes));
+        }
     }, []);
 
 
@@ -152,20 +189,32 @@ const Visitors = () => {
                 <Dialog open={isAddNoteDialogOpen} onOpenChange={setIsAddNoteDialogOpen}>
                     <DialogTitle></DialogTitle>
                     <DialogContent className="w-fit p-2 max-h-[calc(100dvh-1rem)] bg-[#f2f2f2] overflow-y-auto gap-2 z-[99999]">
-                            <SketchPanel />
-                            <div className="space-y-2">
-                                <Input name='name' id='name' placeholder='Name' className='text-xs border-zinc-300 font-mono'/>
-                            </div>
-                            <div className="space-y-2">
-                                <Input name='note' id='note' placeholder='Type your note...' className='text-xs border-zinc-300 font-mono'/>
-                            </div>
+                        <SketchPanel ref={sketchPanelRef} />
+                        <div className="space-y-2">
+                            <Input name='name' id='name'
+                                type='text'
+                                max={15}
+                                value={newNoteState.name}
+                                onChange={(e) => setNewNoteState(prev => ({ ...prev, name: e.target.value }))}
+                                placeholder='Name' className='text-xs border-zinc-300 font-mono' />
+                        </div>
+                        <div className="space-y-2">
+                            <Input name='desc' id='desc'
+                                type='text'
+                                max={25}
+                                value={newNoteState.desc}
+                                onChange={(e) => setNewNoteState(prev => ({ ...prev, desc: e.target.value }))}
+                                placeholder='Type your note...' className='text-xs border-zinc-300 font-mono' />
+                        </div>
                         <DialogFooter className="justify-end flex-row">
                             <DialogClose asChild>
                                 <Button type="button" variant="outline" className='cursor-pointer h-[30px]'>
                                     Close
                                 </Button>
                             </DialogClose>
-                            <Button type="button" variant="default" className='cursor-pointer border border-zinc-300 h-[30px]'>
+                            <Button type="button" onClick={handleSaveNote}
+                                disabled={!newNoteState.name || !newNoteState.desc}
+                                variant="default" className='cursor-pointer border border-zinc-300 h-[30px]'>
                                 Save
                             </Button>
                         </DialogFooter>

@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { ReactSketchCanvas, ReactSketchCanvasRef } from 'react-sketch-canvas';
 import { Slider } from "@/components/ui/slider"
 import { CirclePicker, ColorResult } from 'react-color';
@@ -16,8 +16,15 @@ const predefinedColors = [
     '#B39DDB', // Amethyst (Rich, muted purple)
 ];
 
+export interface SketchPanelHandle {
+    exportDrawing: () => Promise<string>;
+}
+  
+interface SketchPanelProps {
+    onImgExport: (imageData: string) => void;
+}
 
-const SketchPanel = () => {
+const SketchPanel = forwardRef<SketchPanelHandle>((_props, ref) => {
     const canvasRef = useRef<ReactSketchCanvasRef>(null);
     const sliderBoxRef = useRef<HTMLDivElement>(null);
     const [brushColor, setBrushColor] = useState(predefinedColors[0]);
@@ -85,6 +92,28 @@ const SketchPanel = () => {
             setShowBrushSlider(false);
         }
     };
+
+    // const handleExportImage = async () => {
+    //     if (canvasRef.current) {
+    //         try {
+    //             const imageData = await canvasRef.current.exportImage('png'); 
+    //             onImgExport(imageData); 
+    //             console.log("Sketch exported:", imageData.substring(0, 50) + "...");
+    //         } catch (error) {
+    //             console.error("Failed to export image:", error);
+    //         }
+    //     }
+    // };
+
+    useImperativeHandle(ref, () => ({
+        exportDrawing: async () => {
+          if (canvasRef.current) {
+            const imageData = await canvasRef.current.exportImage('png');
+            return imageData;
+          }
+          throw new Error("Canvas not ready");
+        }
+      })); 
 
     return (
         <div className='w-full'>
@@ -166,6 +195,6 @@ const SketchPanel = () => {
             </div>
         </div>
     )
-}
+})
 
-export default SketchPanel
+export default SketchPanel;
