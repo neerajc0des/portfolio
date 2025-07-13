@@ -19,6 +19,8 @@ import { Label } from "@/components/ui/label"
 
 import { dbFirestore } from '@/lib/firebase';
 import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from 'firebase/firestore';
+import { usePresence, useLiveUserCount } from "@/lib/useLiveUserCount"
+
 
 // const notesData = [
 //     {
@@ -60,6 +62,8 @@ interface VisitorNote {
 }
 
 const Visitors = () => {
+    usePresence()
+    const liveUserCount = useLiveUserCount()
     const sketchPanelRef = useRef<SketchPanelHandle>(null);
     const [isAddNoteDialogOpen, setIsAddNoteDialogOpen] = useState(false)
     const [notesView, setNotesView] = useState("grid");
@@ -174,7 +178,7 @@ const Visitors = () => {
                         <div className="leftNav flex gap-5 items-center z-[9990]">
                             <Button type='button' variant={"ghost"} onClick={handleViewToggle} className='border border-zinc-300 hover:bg-zinc-300 cursor-pointer hover:text-primary/80 rounded-sm text-primary p-2 w-[40px] h-[40px]'>{notesView == "board" ? <LayoutGrid /> : <SquareDashedMousePointer />}</Button>
                             <div className="activeUsers flex items-center gap-3">
-                                <span>1</span>
+                                <span>{liveUserCount}</span>
                                 <span className="relative flex size-2">
                                     <span className="absolute inline-flex h-full w-full animate-[ping_1.5s_infinite] rounded-full bg-green-400 opacity-75"></span>
                                     <span className="relative inline-flex size-2 rounded-full bg-green-500"></span>
