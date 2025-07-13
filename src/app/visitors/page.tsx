@@ -64,10 +64,10 @@ interface VisitorNote {
 const Visitors = () => {
     usePresence()
     const liveUserCount = useLiveUserCount()
+    const [isNotePosted, setIsNotePosted] = useState<string>("no");
     const sketchPanelRef = useRef<SketchPanelHandle>(null);
     const [isAddNoteDialogOpen, setIsAddNoteDialogOpen] = useState(false)
     const [notesView, setNotesView] = useState("grid");
-    const [activeUsers, setActiveUsers] = useState(0);
     const [notes, setNotes] = useState<VisitorNote[]>([
         {
             imgUrl: "/noteThumb300x300.png",
@@ -100,6 +100,9 @@ const Visitors = () => {
     // console.log(newNoteState);
 
     useEffect(() => {
+        const newNotePostedVal = JSON.parse(localStorage.getItem("hasPosted") || `"no"`)
+        setIsNotePosted(newNotePostedVal);
+        
         const q = query(collection(dbFirestore, 'visitorNotes'), orderBy('timestamp', 'desc'));
 
         const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -145,6 +148,8 @@ const Visitors = () => {
 
             await addDoc(collection(dbFirestore, 'visitorNotes'), newNote);
 
+            setIsNotePosted("yes")
+            localStorage.setItem("hasPosted", JSON.stringify("yes"))
             setIsAddNoteDialogOpen(false);
             setNewNoteState({ name: "", desc: "", imgUrl: null });
         } catch (err) {
@@ -178,7 +183,7 @@ const Visitors = () => {
                         <div className="leftNav flex gap-5 items-center z-[9990]">
                             <Button type='button' variant={"ghost"} onClick={handleViewToggle} className='border border-zinc-300 hover:bg-zinc-300 cursor-pointer hover:text-primary/80 rounded-sm text-primary p-2 w-[40px] h-[40px]'>{notesView == "board" ? <LayoutGrid /> : <SquareDashedMousePointer />}</Button>
                             <div className="activeUsers flex items-center gap-3">
-                                <Users size={'18px'} className='text-paragraph'/> <span>{liveUserCount}</span>
+                                <Users size={'18px'} className='text-paragraph' /> <span>{liveUserCount}</span>
                                 <span className="relative flex size-2">
                                     <span className="absolute inline-flex h-full w-full animate-[ping_1.5s_infinite] rounded-full bg-green-400 opacity-75"></span>
                                     <span className="relative inline-flex size-2 rounded-full bg-green-500"></span>
@@ -186,7 +191,21 @@ const Visitors = () => {
                             </div>
                         </div>
                         <div className="navRight">
-                            <Button type='button' className='cursor-pointer py-5' onClick={() => setIsAddNoteDialogOpen(true)}><Plus /> Leave a note</Button>
+                            {isNotePosted == "no"
+                                ?
+                                <Button type='button' className='cursor-pointer py-5' onClick={() => setIsAddNoteDialogOpen(true)}><Plus /> Leave a note</Button>
+                                :
+                                <span className='text-primary text-sm 
+                                relative
+                                inline-block
+                                text-transparent
+                                bg-clip-text
+                                bg-[linear-gradient(90deg,#333_0%,#666_45%,#fff_50%,#666_55%,#333_100%)]
+                                bg-[length:300%_100%]
+                                bg-[position:-300%_0]
+                                hover:animate-[shine_10s_linear]                            
+                                '>Thank you for your note!❤️</span>
+                            }
                         </div>
                     </div>
 
@@ -230,7 +249,7 @@ const Visitors = () => {
 
                 <Dialog open={isAddNoteDialogOpen} onOpenChange={setIsAddNoteDialogOpen}>
                     <DialogTitle></DialogTitle>
-                    <DialogContent className="w-fit p-2 max-h-[calc(100dvh-1rem)] bg-[#f6f6f6] overflow-y-auto gap-2 z-[99999] border border-zinc-400">
+                    <DialogContent className="w-fit p-2 max-h-[calc(100dvh-1rem)] bg-zinc-50 overflow-y-auto gap-2 z-[99999] border border-zinc-400">
                         <SketchPanel ref={sketchPanelRef} />
                         <div className="space-y-2">
                             <Input name='name' id='name'
