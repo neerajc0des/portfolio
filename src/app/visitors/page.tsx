@@ -188,7 +188,7 @@ const Visitors = () => {
 
                 <Dialog open={isAddNoteDialogOpen} onOpenChange={setIsAddNoteDialogOpen}>
                     <DialogTitle></DialogTitle>
-                    <DialogContent className="w-fit p-2 max-h-[calc(100dvh-1rem)] bg-[#f1f1f1] overflow-y-auto gap-2 z-[99999]">
+                    <DialogContent className="w-fit p-2 max-h-[calc(100dvh-1rem)] bg-[#f1f1f1] overflow-y-auto gap-2 z-[99999] border border-zinc-400">
                         <SketchPanel ref={sketchPanelRef} />
                         <div className="space-y-2">
                             <Input name='name' id='name'
@@ -196,7 +196,7 @@ const Visitors = () => {
                                 max={15}
                                 value={newNoteState.name}
                                 onChange={(e) => setNewNoteState(prev => ({ ...prev, name: e.target.value }))}
-                                placeholder='Name' className='text-xs border-zinc-300 font-mono' />
+                                placeholder='Name' className='text-xs border-zinc-400/70 font-mono' />
                         </div>
                         <div className="space-y-2">
                             <Input name='desc' id='desc'
@@ -204,17 +204,17 @@ const Visitors = () => {
                                 max={25}
                                 value={newNoteState.desc}
                                 onChange={(e) => setNewNoteState(prev => ({ ...prev, desc: e.target.value }))}
-                                placeholder='Type your note...' className='text-xs border-zinc-300 font-mono' />
+                                placeholder='Type your note...' className='text-xs border-zinc-400/70 font-mono' />
                         </div>
                         <DialogFooter className="justify-end flex-row">
                             <DialogClose asChild>
-                                <Button type="button" variant="outline" className='cursor-pointer h-[30px]'>
+                                <Button type="button" variant="outline" className='cursor-pointer h-[30px] border border-zinc-400/80'>
                                     Close
                                 </Button>
                             </DialogClose>
                             <Button type="button" onClick={handleSaveNote}
                                 disabled={!newNoteState.name || !newNoteState.desc}
-                                variant="default" className='cursor-pointer border border-zinc-300 h-[30px]'>
+                                variant="default" className='cursor-pointer border border-zinc-400/80 h-[30px]'>
                                 Save
                             </Button>
                         </DialogFooter>
