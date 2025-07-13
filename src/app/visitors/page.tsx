@@ -230,7 +230,7 @@ const Visitors = () => {
 
                 <Dialog open={isAddNoteDialogOpen} onOpenChange={setIsAddNoteDialogOpen}>
                     <DialogTitle></DialogTitle>
-                    <DialogContent className="w-fit p-2 max-h-[calc(100dvh-1rem)] bg-[#f1f1f1] overflow-y-auto gap-2 z-[99999] border border-zinc-400">
+                    <DialogContent className="w-fit p-2 max-h-[calc(100dvh-1rem)] bg-[#f6f6f6] overflow-y-auto gap-2 z-[99999] border border-zinc-400">
                         <SketchPanel ref={sketchPanelRef} />
                         <div className="space-y-2">
                             <Input name='name' id='name'

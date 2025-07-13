@@ -121,7 +121,7 @@ const SketchPanel = forwardRef<SketchPanelHandle>((_props, ref) => {
     return (
         <div className='w-full'>
             <div className='controls w-full flex items-center justify-between pb-1 relative'>
-                <div className="colorPickerContainer w-[170px] overflow-x-auto py-2 pl-2 whitespace-nowrap no-scrollbar">
+                <div className="colorPickerContainer w-[150px] overflow-x-auto py-2 pl-2 whitespace-nowrap no-scrollbar">
                     <CirclePicker
                         colors={predefinedColors}
                         color={brushColor}
@@ -136,7 +136,7 @@ const SketchPanel = forwardRef<SketchPanelHandle>((_props, ref) => {
                 <div className="flex gap-0 items-center tools justify-end">
                     <Button
                         onClick={handleUndo}
-                        className="p-1 w-[30px] h-[25px] hover:bg-primary/0 hover:text-primary/60 cursor-pointer"
+                        className=" hover:bg-zinc-200/90 rounded-[5px] p-1 w-[30px] h-[28px]  hover:text-primary/60 cursor-pointer"
                         variant={"ghost"}
                         type="button"
                     >
@@ -144,7 +144,7 @@ const SketchPanel = forwardRef<SketchPanelHandle>((_props, ref) => {
                     </Button>
                     <Button
                         onClick={handleRedo}
-                        className="p-1 w-[30px] h-[25px] hover:bg-primary/0 hover:text-primary/60 cursor-pointer"
+                        className=" hover:bg-zinc-200/90 rounded-[5px] p-1 w-[30px] h-[28px]  hover:text-primary/60 cursor-pointer"
                         variant={"ghost"}
                         type="button"
                     >
@@ -153,14 +153,14 @@ const SketchPanel = forwardRef<SketchPanelHandle>((_props, ref) => {
 
                     <Button
                         onClick={handleClear}
-                        className="p-1 w-[30px] h-[25px] hover:bg-primary/0 hover:text-primary/60 cursor-pointer"
+                        className=" hover:bg-zinc-200/90 rounded-[5px] p-1 w-[30px] h-[28px] hover:text-primary/60 cursor-pointer"
                         variant={"ghost"}
                         type="button"
                     >
                         <Trash />
                     </Button>
                     <Button
-                        className={`p-1 w-[30px] h-[25px] ${isErasing ? "bg-zinc-200" : "bg-primary/0"} hover:bg-zinc-200/90 transition-all duration-200 hover:text-primary/60 cursor-pointer`}
+                        className={` hover:bg-zinc-200/90 rounded-[5px] p-1 w-[30px] h-[28px] ${isErasing ? "bg-zinc-200" : "bg-primary/0"} hover:bg-zinc-200/90 transition-all duration-200 hover:text-primary/60 cursor-pointer`}
                         variant={"ghost"}
                         type="button"
                         onClick={handleEraserClick}
@@ -170,7 +170,7 @@ const SketchPanel = forwardRef<SketchPanelHandle>((_props, ref) => {
                     </Button>
 
                     <Button
-                        className={`p-1 w-[30px] h-[25px] hover:bg-primary/0 bg-primary/0 hover:text-primary/60 cursor-pointer`}
+                        className={` hover:bg-zinc-200/90 rounded-[5px] p-1 w-[30px] h-[28px]  bg-primary/0 hover:text-primary/60 cursor-pointer`}
                         variant={"ghost"}
                         type="button"
                         onClick={handleBrushIconClick}
@@ -194,7 +194,7 @@ const SketchPanel = forwardRef<SketchPanelHandle>((_props, ref) => {
                     strokeColor={brushColor}
                     strokeWidth={brushRadius}
                     eraserWidth={brushRadius}
-                    canvasColor={"#d9d9d9"}
+                    canvasColor={"#cacaca"}
                     // width={'300px'}
                     height={"300px"}
                     style={{ border: '0px transparent' }}
