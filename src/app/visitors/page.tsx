@@ -157,7 +157,7 @@ const Visitors = () => {
         }
     };
 
-    console.log(notes);
+    // console.log(notes);
 
 
     const handleViewToggle = () => {

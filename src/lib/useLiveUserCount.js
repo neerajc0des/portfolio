@@ -10,9 +10,17 @@ import {
 
 import { dbRealtime } from "./firebase"
 
+const getOrCreateVisitorId = () => {
+    const storedId = localStorage.getItem("visitorId");
+    if (storedId) return storedId;
+    const newId = Math.random().toString(36).slice(2);
+    localStorage.setItem("visitorId", newId);
+    return newId;
+  };
+
 export const usePresence = () => {
     useEffect(() => {
-        const userId = Math.random().toString(36).slice(2)
+        const userId = getOrCreateVisitorId();
         const userRef = ref(dbRealtime, `presence/${userId}`)
         const connectedRef = ref(dbRealtime, ".info/connected")
 
@@ -29,8 +37,9 @@ export const usePresence = () => {
         })
 
         return () => {
-            onDisconnect(userRef).cancel()
-            unsub()
+            onDisconnect(userRef).cancel();
+            remove(userRef);
+            unsub();
         }
     }, [])
 }
