@@ -17,6 +17,9 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
+import { db } from '@/lib/firebase';
+import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from 'firebase/firestore';
+
 const notesData = [
     {
         imgUrl: "/noteThumb300x300.png",
@@ -45,10 +48,31 @@ const notesData = [
     }
 ];
 
+interface VisitorNote {
+    id?: string;
+    imgUrl: string;
+    name: string;
+    desc: string;
+    timestamp?: any;
+    initialRotation?: number;
+    initialX?: number;
+    initialY?: number;
+}
+
 const Visitors = () => {
     const sketchPanelRef = useRef<SketchPanelHandle>(null);
     const [isAddNoteDialogOpen, setIsAddNoteDialogOpen] = useState(false)
     const [notesView, setNotesView] = useState("grid");
+    const [notes, setNotes] = useState<VisitorNote[]>([
+        {
+            imgUrl: "/noteThumb300x300.png",
+            name: "Tyson",
+            desc: "Awesome portfolio!",
+            initialRotation: 4,
+            initialX: 200,
+            initialY: 202,
+        },
+    ])
     const [notesWithRandomRotation, setNotesWithRandomRotation] = useState([{
         imgUrl: "/noteThumb300x300.png",
         name: "Automated",
@@ -70,6 +94,35 @@ const Visitors = () => {
 
     // console.log(newNoteState);
 
+    useEffect(() => {
+        const q = query(collection(db, 'visitorNotes'), orderBy('timestamp', 'desc'));
+
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const fetchedNotes: VisitorNote[] = [];
+            snapshot.forEach((doc) => {
+                fetchedNotes.push({
+                    id: doc.id,
+                    ...(doc.data() as VisitorNote),
+                    timestamp: doc.data().timestamp ? doc.data().timestamp.toDate() : null,
+                });
+            });
+
+            const notesWithClientProps = fetchedNotes.map(note => ({
+                ...note,
+                initialRotation: getRandomRotation(),
+                initialX: Math.floor(Math.random() * 300),
+                initialY: Math.floor(Math.random() * 400),
+            }));
+            setNotes(notesWithClientProps);
+        }, (error) => {
+            console.error("Error fetching notes from Firestore: ", error);
+        });
+
+        return () => unsubscribe();
+
+    }, [])
+
+
 
     const handleSaveNote = async () => {
         if (!sketchPanelRef.current) return;
@@ -79,22 +132,22 @@ const Visitors = () => {
             const newNote = {
                 ...newNoteState,
                 imgUrl: img,
+                timestamp: serverTimestamp(),
                 initialRotation: getRandomRotation(),
                 initialX: Math.floor(Math.random() * 300),
                 initialY: Math.floor(Math.random() * 400),
             };
 
-            setNotesWithRandomRotation((prev) => {
-                const updated = [...prev, newNote];
-                localStorage.setItem("visitorNotes", JSON.stringify(updated));
-                return updated;
-            });
+            await addDoc(collection(db, 'visitorNotes'), newNote);
+
             setIsAddNoteDialogOpen(false);
             setNewNoteState({ name: "", desc: "", imgUrl: null });
         } catch (err) {
             console.error("Something went wrong", err);
         }
     };
+
+    console.log(notes);
 
 
     const handleViewToggle = () => {
@@ -110,22 +163,6 @@ const Visitors = () => {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     };
 
-    useEffect(() => {
-        const storedNotes = localStorage.getItem("visitorNotes");
-        if (storedNotes) {
-            setNotesWithRandomRotation(JSON.parse(storedNotes));
-        }
-        else {
-            const initialNotes = notesData.map(note => ({
-                ...note,
-                initialRotation: getRandomRotation(),
-                initialX: Math.floor(Math.random() * 300),
-                initialY: Math.floor(Math.random() * 400),
-            }));
-            setNotesWithRandomRotation(initialNotes);
-            localStorage.setItem("visitorNotes", JSON.stringify(initialNotes));
-        }
-    }, []);
 
 
     return (
@@ -153,7 +190,7 @@ const Visitors = () => {
 
                         {notesView == "grid" ?
                             <div className="gridViewNotesWrapper grid grid-cols-2 justify-self-between sm:grid-cols-3 gap-5 p-5 pt-[5rem] overflow-hidden w-full">
-                                {notesWithRandomRotation.slice().reverse().map((note, idx) => {
+                                {notes.slice().reverse().map((note, idx) => {
                                     return (
                                         <NoteCard key={idx}
                                             imgUrl={note.imgUrl}
@@ -168,7 +205,7 @@ const Visitors = () => {
                             </div>
                             :
                             <div className="dragViewNotesWrapper  pt-[5rem] w-full">
-                                {notesWithRandomRotation.map((note, idx) => {
+                                {notes.map((note, idx) => {
                                     return (
                                         <NoteCard key={idx}
                                             imgUrl={note.imgUrl}

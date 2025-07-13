@@ -9,7 +9,7 @@ interface NoteCardProps {
     imgUrl: string;
     name: string;
     desc: string;
-    initialRotation: number;
+    initialRotation?: number;
     isBoardView?: boolean;
     initialX?: number;
     initialY?: number;
