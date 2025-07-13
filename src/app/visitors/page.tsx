@@ -2,7 +2,7 @@
 import NoteCard from '@/components/NoteCard'
 import SketchPanel, { SketchPanelHandle } from '@/components/SketchPanel'
 import { Button } from '@/components/ui/button'
-import { LayoutGrid, Plus, SquareDashedMousePointer } from 'lucide-react'
+import { LayoutGrid, Plus, SquareDashedMousePointer, Users } from 'lucide-react'
 import React, { useEffect, useState, useRef } from 'react'
 import {
     Dialog,
@@ -178,7 +178,7 @@ const Visitors = () => {
                         <div className="leftNav flex gap-5 items-center z-[9990]">
                             <Button type='button' variant={"ghost"} onClick={handleViewToggle} className='border border-zinc-300 hover:bg-zinc-300 cursor-pointer hover:text-primary/80 rounded-sm text-primary p-2 w-[40px] h-[40px]'>{notesView == "board" ? <LayoutGrid /> : <SquareDashedMousePointer />}</Button>
                             <div className="activeUsers flex items-center gap-3">
-                                <span>{liveUserCount}</span>
+                                <Users size={'18px'} className='text-paragraph'/> <span>{liveUserCount}</span>
                                 <span className="relative flex size-2">
                                     <span className="absolute inline-flex h-full w-full animate-[ping_1.5s_infinite] rounded-full bg-green-400 opacity-75"></span>
                                     <span className="relative inline-flex size-2 rounded-full bg-green-500"></span>
@@ -195,7 +195,7 @@ const Visitors = () => {
 
                         {notesView == "grid" ?
                             <div className="gridViewNotesWrapper grid grid-cols-2 justify-self-between sm:grid-cols-3 gap-5 p-5 pt-[5rem] overflow-hidden w-full">
-                                {notes.slice().reverse().map((note, idx) => {
+                                {notes.map((note, idx) => {
                                     return (
                                         <NoteCard key={idx}
                                             imgUrl={note.imgUrl}
