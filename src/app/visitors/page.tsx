@@ -130,7 +130,7 @@ const Visitors = () => {
                                 })}
                             </div>
                             :
-                            <div className="dragViewNotesWrapper   w-full">
+                            <div className="dragViewNotesWrapper  pt-[5rem] w-full">
                                 {notesWithRandomRotation.map((note, idx) => {
                                     return (
                                         <NoteCard key={idx}
@@ -151,7 +151,7 @@ const Visitors = () => {
 
                 <Dialog open={isAddNoteDialogOpen} onOpenChange={setIsAddNoteDialogOpen}>
                     <DialogTitle></DialogTitle>
-                    <DialogContent className="w-fit p-2 max-h-[calc(100dvh-1rem)] overflow-y-auto">
+                    <DialogContent className="w-fit p-2 max-h-[calc(100dvh-1rem)] bg-[#f2f2f2] overflow-y-auto gap-2 z-[99999]">
                             <SketchPanel />
                             <div className="space-y-2">
                                 <Input name='name' id='name' placeholder='Name' className='text-xs border-zinc-300 font-mono'/>
@@ -159,13 +159,13 @@ const Visitors = () => {
                             <div className="space-y-2">
                                 <Input name='note' id='note' placeholder='Type your note...' className='text-xs border-zinc-300 font-mono'/>
                             </div>
-                        <DialogFooter className="justify-end">
+                        <DialogFooter className="justify-end flex-row">
                             <DialogClose asChild>
-                                <Button type="button" variant="outline" className='cursor-pointer'>
+                                <Button type="button" variant="outline" className='cursor-pointer h-[30px]'>
                                     Close
                                 </Button>
                             </DialogClose>
-                            <Button type="button" variant="default" className='cursor-pointer border border-zinc-300'>
+                            <Button type="button" variant="default" className='cursor-pointer border border-zinc-300 h-[30px]'>
                                 Save
                             </Button>
                         </DialogFooter>

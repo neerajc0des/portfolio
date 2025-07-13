@@ -63,7 +63,7 @@ const NoteCard = ({ imgUrl, name, desc, initialRotation, isBoardView = false, in
             ref={cardRef}
             className={`noteItem ${isBoardView ? 'absolute' : ''} bg-background rounded-md shadow-lg overflow-hidden transition-all duration-300  ${isBoardView ? 'w-[10rem]' : 'w-full sm:w-[10rem]'} p-2 border-zinc-200 border ${isBoardView ? 'active:cursor-grabbing' : ''}`}
             style={{
-                zIndex: isHovered ? 10 : undefined,
+                zIndex: isHovered ? 10 : 0,
                 transform: `rotate(${initialRotation}deg)`,
             }}
             onMouseEnter={() => {

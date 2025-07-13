@@ -11,7 +11,7 @@ const Navbar = () => {
   const [isBlogHover, setIsBlogHover] = useState(false);
 
   return (
-    <div className='navContainer'>
+    <div className='navContainer z-[9999]'>
       <div className="flex items-center pl-4 p-2 rounded-2xl border border-zinc-200 bg-white/65 backdrop-blur-lg text-zinc-700 w-fit ">
         <Link href="/" title="Home" className='hover:opacity-80 pl-3 l-screen-nav-item'>
           <House strokeWidth='2' size={22} />

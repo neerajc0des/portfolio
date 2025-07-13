@@ -10,11 +10,10 @@ const predefinedColors = [
     '#FF7F7F', // Vivid Rose (A deeper, more saturated pink-red)
     '#FFBF00', // Amber (Bright, warm orange-yellow)
     '#80D880', // Medium Spring Green (Lively but still soft green)
+    '#fff', // Soft White (for highlights or 'erasing' to background)
+    '#303030', // Deep Charcoal (Strong, dark neutral for outlines)
     '#64B5F6', // Cerulean Blue (Clear, vibrant blue)
     '#B39DDB', // Amethyst (Rich, muted purple)
-    '#FFD600', // Lemon Yellow (Punchy, clear yellow)
-    '#303030', // Deep Charcoal (Strong, dark neutral for outlines)
-    '#F5F5F5', // Soft White (for highlights or 'erasing' to background)
 ];
 
 
@@ -63,19 +62,19 @@ const SketchPanel = () => {
 
     return (
         <div className='w-full'>
-            <div className='controls bg-white w-full flex items-center justify-between  relative'>
+            <div className='controls w-full flex items-center justify-between  relative'>
                 <CirclePicker
                     colors={predefinedColors}
                     color={brushColor}
                     onChangeComplete={handleChangeColor}
-                    width='240px'
-                    circleSize={18}
-                    circleSpacing={12}
+                    width='150px'
+                    circleSize={16}
+                    circleSpacing={5}
                 />
                 <div className="flex gap-0 items-center tools justify-end">
                     <Button
                         onClick={handleUndo}
-                        className="p-2 hover:bg-primary/0 hover:text-primary/60 cursor-pointer"
+                        className="p-1 w-[30px] h-[25px] hover:bg-primary/0 hover:text-primary/60 cursor-pointer"
                         variant={"ghost"}
                         type="button"
                     >
@@ -83,7 +82,7 @@ const SketchPanel = () => {
                     </Button>
                     <Button
                         onClick={handleRedo}
-                        className="p-2 hover:bg-primary/0 hover:text-primary/60 cursor-pointer"
+                        className="p-1 w-[30px] h-[25px] hover:bg-primary/0 hover:text-primary/60 cursor-pointer"
                         variant={"ghost"}
                         type="button"
                     >
@@ -92,14 +91,14 @@ const SketchPanel = () => {
 
                     <Button
                         onClick={handleClear}
-                        className="p-2 hover:bg-primary/0 hover:text-primary/60 cursor-pointer"
+                        className="p-1 w-[30px] h-[25px] hover:bg-primary/0 hover:text-primary/60 cursor-pointer"
                         variant={"ghost"}
                         type="button"
                     >
                         <Trash />
                     </Button>
                     <Button
-                        className={`p-2 ${isErasing ? "bg-zinc-200" : "bg-primary/0"} hover:bg-zinc-200/90 transition-all duration-200 hover:text-primary/60 cursor-pointer`}
+                        className={`p-1 w-[30px] h-[25px] ${isErasing ? "bg-zinc-200" : "bg-primary/0"} hover:bg-zinc-200/90 transition-all duration-200 hover:text-primary/60 cursor-pointer`}
                         variant={"ghost"}
                         type="button"
                         onClick={handleEraserClick}
@@ -108,7 +107,7 @@ const SketchPanel = () => {
                     </Button>
 
                     <Button
-                        className={`p-2 hover:bg-primary/0 bg-primary/0 hover:text-primary/60 cursor-pointer`}
+                        className={`p-1 w-[30px] h-[25px] hover:bg-primary/0 bg-primary/0 hover:text-primary/60 cursor-pointer`}
                         variant={"ghost"}
                         type="button"
                         onClick={handleBrushIconClick}
@@ -126,16 +125,17 @@ const SketchPanel = () => {
                     <span className="text-gray-700 text-xs font-medium">{brushRadius}px</span>
                 </div>
             </div>
-            <div className="canvasContainer overflow-hidden w-full rounded-sm">
-            <ReactSketchCanvas
-                ref={canvasRef}
-                strokeColor={brushColor}
-                strokeWidth={brushRadius}
-                eraserWidth={brushRadius}
-                canvasColor={"#e7e7e7"}
-                height={"400px"}
-                style={{ border: '0px transparent'}}
-            />
+            <div className="canvasContainer w-[300px] overflow-hidden w-full rounded-sm">
+                <ReactSketchCanvas
+                    ref={canvasRef}
+                    strokeColor={brushColor}
+                    strokeWidth={brushRadius}
+                    eraserWidth={brushRadius}
+                    canvasColor={"#d9d9d9"}
+                    // width={'300px'}
+                    height={"300px"}
+                    style={{ border: '0px transparent' }}
+                />
             </div>
         </div>
     )
