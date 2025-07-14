@@ -4,7 +4,7 @@ import { ReactSketchCanvas, ReactSketchCanvasRef } from 'react-sketch-canvas';
 import { Slider } from "@/components/ui/slider"
 import { CirclePicker, ColorResult, SketchPicker } from 'react-color';
 import { Button } from './ui/button';
-import { Circle, CircleDot, Eraser, Redo, Trash, Undo } from 'lucide-react';
+import { Circle, CircleDot, Eraser, Plus, Redo, Trash, Undo } from 'lucide-react';
 
 const predefinedColors = [
     '#FF7F7F', // Vivid Rose (A deeper, more saturated pink-red)
@@ -159,15 +159,17 @@ const SketchPanel = forwardRef<SketchPanelHandle>((_props, ref) => {
     return (
         <div className='w-full'>
             <div className='controls w-full flex items-center justify-between pb-1 relative'>
-                <div className="colorPickerContainer relative w-[150px] overflow-x-auto py-2 pl-6 whitespace-nowrap no-scrollbar">
-                    <div onClick={() => setShowColorPicker((prev)=>!prev)} ref={customColorIconRef} className="w-[16px] h-[16px] hue-wheel-gradient border-zinc-400 border absolute top-[8px] left-[2px] cursor-pointer hover:scale-110"></div>
+                <div className="colorPickerContainer relative w-[160px] overflow-x-auto py-2 pl-8 whitespace-nowrap no-scrollbar">
+                    <div onClick={() => setShowColorPicker((prev) => !prev)} ref={customColorIconRef} title="New color" className="w-[18px] h-[18px] text-primary/60  shadow-sm flex items-center justify-center font-semibold hue-wheel-gradient border-zinc-400 border absolute top-[8px] left-[2px] cursor-pointer hover:scale-110">
+                        <Plus size={15} strokeWidth={3}/>
+                    </div>
 
                     <CirclePicker
                         colors={predefinedColors}
                         color={brushColor}
                         onChangeComplete={handleChangeColor}
-                        width='370px'
-                        circleSize={16}
+                        width='400px'
+                        circleSize={18}
                         circleSpacing={10}
                     />
                 </div>
@@ -176,7 +178,7 @@ const SketchPanel = forwardRef<SketchPanelHandle>((_props, ref) => {
                         <SketchPicker
                             color={brushColor}
                             onChangeComplete={handleChangeCustomColor}
-                            width='200px'
+                            width='250px'
                             className='absolute top-[45px] left-[10px]'
                         />
                     </div>
@@ -238,7 +240,7 @@ const SketchPanel = forwardRef<SketchPanelHandle>((_props, ref) => {
                     <span className="text-gray-700 text-xs font-medium">{brushRadius}px</span>
                 </div>
             </div>
-            <div className="canvasContainer w-[300px] overflow-hidden w-full rounded-sm">
+            <div className="canvasContainer overflow-hidden w-full rounded-sm">
                 <ReactSketchCanvas
                     ref={canvasRef}
                     strokeColor={brushColor}

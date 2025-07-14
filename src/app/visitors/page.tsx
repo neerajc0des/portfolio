@@ -199,7 +199,8 @@ const Visitors = () => {
                                 ?
                                 <Button type='button' className='cursor-pointer py-5' onClick={() => setIsAddNoteDialogOpen(true)}><Plus /> Leave a note</Button>
                                 :
-                                <span className='text-primary text-sm 
+                                <>
+                                    <span className='text-primary text-sm 
                                 relative
                                 inline-block
                                 text-transparent
@@ -208,7 +209,8 @@ const Visitors = () => {
                                 bg-[length:300%_100%]
                                 bg-[position:-300%_0]
                                 hover:animate-[shine_10s_linear]                            
-                                '>Thank you for your note!❤️</span>
+                                '>Thank you for your note!</span>❤️
+                                </>
                             }
                         </div>
                     </div>
@@ -253,7 +255,7 @@ const Visitors = () => {
 
                 <Dialog open={isAddNoteDialogOpen} onOpenChange={setIsAddNoteDialogOpen}>
                     <DialogTitle></DialogTitle>
-                    <DialogContent className="w-fit p-2 max-h-[calc(100dvh-1rem)] bg-zinc-50 overflow-y-auto gap-2 z-[99999] border border-zinc-400">
+                    <DialogContent className="!max-w-[350px] sm:!max-w-[350px] lg:max-w-[350px] p-2 max-h-[calc(100dvh-1rem)] bg-zinc-50 overflow-y-auto gap-2 z-[99999] border border-zinc-400">
                         <SketchPanel ref={sketchPanelRef} />
                         <div className="space-y-2">
                             <Input name='name' id='name'
@@ -274,7 +276,7 @@ const Visitors = () => {
                         <DialogFooter className="justify-end flex-row">
                             <DialogClose asChild>
                                 <Button type="button" variant="outline" className='cursor-pointer h-[30px] border border-zinc-400/80'>
-                                    Close
+                                    Cancel
                                 </Button>
                             </DialogClose>
                             <Button type="button" onClick={handleSaveNote}
