@@ -40,7 +40,7 @@ const SketchPanel = forwardRef<SketchPanelHandle>((_props, ref) => {
     const brushIconRef = useRef<HTMLButtonElement>(null);
     const [brushColor, setBrushColor] = useState(predefinedColors[0]);
     const [showBrushSlider, setShowBrushSlider] = useState(false);
-    const [brushRadius, setBrushRadius] = useState<number>(2);
+    const [brushRadius, setBrushRadius] = useState<number>(5);
     const [isErasing, setIsErasing] = useState(false);
     const [showColorPicker, setShowColorPicker] = useState(false);
 
