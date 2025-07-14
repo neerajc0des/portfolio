@@ -2,7 +2,7 @@
 import NoteCard from '@/components/NoteCard'
 import SketchPanel, { SketchPanelHandle } from '@/components/SketchPanel'
 import { Button } from '@/components/ui/button'
-import { LayoutGrid, Plus, SquareDashedMousePointer, Users } from 'lucide-react'
+import { LayoutGrid, Loader2, Plus, SquareDashedMousePointer, Users } from 'lucide-react'
 import React, { useEffect, useState, useRef } from 'react'
 import {
     Dialog,
@@ -67,6 +67,7 @@ const Visitors = () => {
     const [isNotePosted, setIsNotePosted] = useState<string>("no");
     const sketchPanelRef = useRef<SketchPanelHandle>(null);
     const [isAddNoteDialogOpen, setIsAddNoteDialogOpen] = useState(false)
+    const [isFormSubmitting, setIsFormSubmitting] = useState(false)
     const [notesView, setNotesView] = useState("grid");
     const [notes, setNotes] = useState<VisitorNote[]>([
         {
@@ -136,6 +137,7 @@ const Visitors = () => {
         if (!sketchPanelRef.current) return;
 
         try {
+            setIsFormSubmitting(true);
             const img = await sketchPanelRef.current.exportDrawing();
             const newNote = {
                 ...newNoteState,
@@ -151,8 +153,10 @@ const Visitors = () => {
             setIsNotePosted("yes")
             localStorage.setItem("hasPosted", JSON.stringify("yes"))
             setIsAddNoteDialogOpen(false);
+            setIsFormSubmitting(false);
             setNewNoteState({ name: "", desc: "", imgUrl: null });
         } catch (err) {
+            setIsFormSubmitting(false);
             console.error("Something went wrong", err);
         }
     };
@@ -274,9 +278,9 @@ const Visitors = () => {
                                 </Button>
                             </DialogClose>
                             <Button type="button" onClick={handleSaveNote}
-                                disabled={!newNoteState.name || !newNoteState.desc}
+                                disabled={!newNoteState.name || !newNoteState.desc || isFormSubmitting}
                                 variant="default" className='cursor-pointer border border-zinc-400/80 h-[30px]'>
-                                Save
+                                {isFormSubmitting && <Loader2 />} Save
                             </Button>
                         </DialogFooter>
                     </DialogContent>
