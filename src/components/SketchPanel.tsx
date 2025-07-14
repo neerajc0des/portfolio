@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { ReactSketchCanvas, ReactSketchCanvasRef } from 'react-sketch-canvas';
 import { Slider } from "@/components/ui/slider"
-import { CirclePicker, ColorResult } from 'react-color';
+import { CirclePicker, ColorResult, SketchPicker } from 'react-color';
 import { Button } from './ui/button';
 import { Circle, CircleDot, Eraser, Redo, Trash, Undo } from 'lucide-react';
 
@@ -10,7 +10,7 @@ const predefinedColors = [
     '#FF7F7F', // Vivid Rose (A deeper, more saturated pink-red)
     '#FFBF00', // Amber (Bright, warm orange-yellow)
     '#80D880', // Medium Spring Green (Lively but still soft green)
-    '#fff', // Soft White (for highlights or 'erasing' to background)
+    '#fafafa', // Soft White (for highlights or 'erasing' to background)
     '#303030', // Deep Charcoal (Strong, dark neutral for outlines)
     '#F1C27D', // face
     '#64B5F6', // Cerulean Blue (Clear, vibrant blue)
@@ -35,34 +35,53 @@ interface SketchPanelProps {
 const SketchPanel = forwardRef<SketchPanelHandle>((_props, ref) => {
     const canvasRef = useRef<ReactSketchCanvasRef>(null);
     const sliderBoxRef = useRef<HTMLDivElement>(null);
+    const customColorPickerRef = useRef<HTMLDivElement>(null);
+    const customColorIconRef = useRef<HTMLDivElement>(null);
+    const brushIconRef = useRef<HTMLButtonElement>(null);
     const [brushColor, setBrushColor] = useState(predefinedColors[0]);
     const [showBrushSlider, setShowBrushSlider] = useState(false);
-    const [brushRadius, setBrushRadius] = useState<number>(5);
+    const [brushRadius, setBrushRadius] = useState<number>(2);
     const [isErasing, setIsErasing] = useState(false);
+    const [showColorPicker, setShowColorPicker] = useState(false);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
                 sliderBoxRef.current &&
-                !sliderBoxRef.current.contains(event.target as Node)
+                !sliderBoxRef.current.contains(event.target as Node) &&
+                brushIconRef.current && 
+                !brushIconRef.current.contains(event.target as Node)
             ) {
                 setShowBrushSlider(false);
             }
+
+            if (
+                showColorPicker && 
+                customColorPickerRef.current &&
+                !customColorPickerRef.current.contains(event.target as Node) &&
+                customColorIconRef.current &&
+                !customColorIconRef.current.contains(event.target as Node)
+
+            ) {
+                setShowColorPicker(false);
+            }
         };
 
-        if (showBrushSlider) {
+        if (showBrushSlider || showColorPicker) {
             document.addEventListener("mousedown", handleClickOutside);
-        } else {
+        }
+        else {
             document.removeEventListener("mousedown", handleClickOutside);
         }
 
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [showBrushSlider]);
+    }, [showBrushSlider, showColorPicker]);
 
 
-    const handleBrushIconClick = () => {
+    const handleBrushIconClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
         setShowBrushSlider(prev => !prev);
     };
 
@@ -71,6 +90,25 @@ const SketchPanel = forwardRef<SketchPanelHandle>((_props, ref) => {
             canvasRef.current.eraseMode(false);
         }
         setIsErasing(false);
+
+        setShowColorPicker(false)
+
+        let newBrushColor;
+        if (color.rgb.a !== undefined && color.rgb.a < 1) {
+            newBrushColor = `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`;
+        } else {
+            newBrushColor = color.hex;
+        }
+
+        setBrushColor(newBrushColor);
+    };
+
+    const handleChangeCustomColor = (color: ColorResult) => {
+        if (canvasRef.current) {
+            canvasRef.current.eraseMode(false);
+        }
+        setIsErasing(false);
+
         let newBrushColor;
         if (color.rgb.a !== undefined && color.rgb.a < 1) {
             newBrushColor = `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`;
@@ -121,7 +159,9 @@ const SketchPanel = forwardRef<SketchPanelHandle>((_props, ref) => {
     return (
         <div className='w-full'>
             <div className='controls w-full flex items-center justify-between pb-1 relative'>
-                <div className="colorPickerContainer w-[150px] overflow-x-auto py-2 pl-2 whitespace-nowrap no-scrollbar">
+                <div className="colorPickerContainer relative w-[150px] overflow-x-auto py-2 pl-6 whitespace-nowrap no-scrollbar">
+                    <div onClick={() => setShowColorPicker((prev)=>!prev)} ref={customColorIconRef} className="w-[16px] h-[16px] hue-wheel-gradient border-zinc-400 border absolute top-[8px] left-[2px] cursor-pointer hover:scale-110"></div>
+
                     <CirclePicker
                         colors={predefinedColors}
                         color={brushColor}
@@ -129,9 +169,18 @@ const SketchPanel = forwardRef<SketchPanelHandle>((_props, ref) => {
                         width='370px'
                         circleSize={16}
                         circleSpacing={10}
-
                     />
                 </div>
+                {showColorPicker &&
+                    <div className="sketchPickerWrapper absolute top-[10px] left-[10px]" ref={customColorPickerRef}>
+                        <SketchPicker
+                            color={brushColor}
+                            onChangeComplete={handleChangeCustomColor}
+                            width='200px'
+                            className='absolute top-[45px] left-[10px]'
+                        />
+                    </div>
+                }
                 <div className="separator w-px h-[15px] bg-zinc-400/80 mx-2 rounded-sm"></div>
                 <div className="flex gap-0 items-center tools justify-end">
                     <Button
@@ -166,23 +215,24 @@ const SketchPanel = forwardRef<SketchPanelHandle>((_props, ref) => {
                         onClick={handleEraserClick}
                     >
                         <Eraser />
-                        {isErasing && <span className="absolute top-[35px] bg-zinc-50 rounded-sm shadow-sm p-1 text-primary left-2 text-xs">Eraser active</span>}
+                        {isErasing && <span className="absolute top-[45px] bg-zinc-50 rounded-sm shadow-sm py-1 px-2 text-primary left-2 text-xs">Eraser active</span>}
                     </Button>
 
                     <Button
                         className={` hover:bg-zinc-200/90 rounded-[5px] p-1 w-[30px] h-[28px]  bg-primary/0 hover:text-primary/60 cursor-pointer`}
                         variant={"ghost"}
                         type="button"
+                        ref={brushIconRef}
                         onClick={handleBrushIconClick}
                     >
                         <CircleDot />
                     </Button>
                 </div>
-                <div ref={sliderBoxRef} className={`sliderContainer ${showBrushSlider ? "block" : "hidden"} absolute top-[30px] border-zinc-300 border rounded-sm right-0 w-[150px] h-[120px] p-5 bg-zinc-100 flex flex-col justify-between items-center`}>
+                <div ref={sliderBoxRef} className={`sliderContainer ${showBrushSlider ? "block" : "hidden"} absolute top-[40px] border-zinc-300 border rounded-sm right-[5px] w-[150px] h-[120px] p-5 bg-zinc-100 flex flex-col justify-between items-center`}>
                     <Slider
                         value={[brushRadius]}
                         onValueChange={([val]) => setBrushRadius(val)}
-                        className='cursor-pointer' defaultValue={[5]} min={5} max={20} step={1}
+                        className='cursor-pointer' defaultValue={[5]} min={2} max={30} step={1}
                     />
                     <Circle size={brushRadius} />
                     <span className="text-gray-700 text-xs font-medium">{brushRadius}px</span>

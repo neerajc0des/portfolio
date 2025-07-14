@@ -199,3 +199,18 @@ body {
   border-radius: 100%;
   box-sizing: border-box;
 }
+
+.hue-wheel-gradient {
+  background: conic-gradient(
+    from 0deg,
+    rgb(255, 91, 91),
+    rgb(255, 195, 85),
+    rgb(255, 255, 85),
+    rgb(131, 255, 131), 
+    rgb(136, 255, 255), 
+    rgb(92, 92, 255),
+    rgb(255, 103, 255), 
+    rgb(255, 114, 114)
+  );
+  border-radius: 50%; 
+}
