@@ -20,7 +20,12 @@ import { Label } from "@/components/ui/label"
 import { dbFirestore } from '@/lib/firebase';
 import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from 'firebase/firestore';
 import { usePresence, useLiveUserCount } from "@/lib/useLiveUserCount"
+import leoProfanity from "leo-profanity";
+import customSlangs from "@/lib/customSlangs.json"
 
+leoProfanity.add(customSlangs);
+
+console.log(customSlangs);
 
 // const notesData = [
 //     {
@@ -139,8 +144,14 @@ const Visitors = () => {
         try {
             setIsFormSubmitting(true);
             const img = await sketchPanelRef.current.exportDrawing();
+
+            const cleanedName = leoProfanity.clean(newNoteState.name);
+            const cleanedDesc = leoProfanity.clean(newNoteState.desc);
+
             const newNote = {
                 ...newNoteState,
+                name: cleanedName,
+                desc: cleanedDesc,
                 imgUrl: img,
                 timestamp: serverTimestamp(),
                 initialRotation: getRandomRotation(),
