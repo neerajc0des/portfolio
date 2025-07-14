@@ -25,7 +25,6 @@ import customSlangs from "@/lib/customSlangs.json"
 
 leoProfanity.add(customSlangs);
 
-console.log(customSlangs);
 
 // const notesData = [
 //     {
