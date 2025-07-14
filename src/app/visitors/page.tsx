@@ -8,14 +8,10 @@ import {
     Dialog,
     DialogClose,
     DialogContent,
-    DialogDescription,
     DialogFooter,
-    DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 
 import { dbFirestore } from '@/lib/firebase';
 import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from 'firebase/firestore';
@@ -25,34 +21,6 @@ import customSlangs from "@/lib/customSlangs.json"
 
 leoProfanity.add(customSlangs);
 
-
-// const notesData = [
-//     {
-//         imgUrl: "/noteThumb300x300.png",
-//         name: "Tyson",
-//         desc: "Awesome portfolio!"
-//     },
-//     {
-//         imgUrl: "/noteThumb300x300.png",
-//         name: "Mark T.",
-//         desc: "Great attention to detail!"
-//     },
-//     {
-//         imgUrl: "/noteThumb300x300.png",
-//         name: "Alex P.",
-//         desc: "Real-time user feature is 💯"
-//     },
-//     {
-//         imgUrl: "/noteThumb300x300.png",
-//         name: "Olivia M.",
-//         desc: "Sleek, modern, functional."
-//     },
-//     {
-//         imgUrl: "/noteThumb300x300.png",
-//         name: "Daniel S.",
-//         desc: "Clever notes section."
-//     }
-// ];
 
 interface VisitorNote {
     id?: string;
@@ -83,14 +51,6 @@ const Visitors = () => {
             initialY: 202,
         },
     ])
-    const [notesWithRandomRotation, setNotesWithRandomRotation] = useState([{
-        imgUrl: "/noteThumb300x300.png",
-        name: "Automated",
-        desc: "Notes section working cool!",
-        initialRotation: 0,
-        initialX: 0,
-        initialY: 0
-    }])
 
     const [newNoteState, setNewNoteState] = useState<{
         name: string;
@@ -102,7 +62,6 @@ const Visitors = () => {
         imgUrl: "",
     });
 
-    // console.log(newNoteState);
 
     useEffect(() => {
         const newNotePostedVal = JSON.parse(localStorage.getItem("hasPosted") || `"no"`)

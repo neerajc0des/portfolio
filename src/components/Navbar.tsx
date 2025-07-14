@@ -3,7 +3,6 @@
 import { House, Users, Github, Instagram, Linkedin, ScrollText, Scroll, Sparkles, Sparkle } from 'lucide-react'
 import React, { useState } from 'react'
 import { Button } from './ui/button'
-import { Link as ScrollLink } from 'react-scroll';
 import Link from 'next/link';
 
 const Navbar = () => {

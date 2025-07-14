@@ -3,7 +3,6 @@
 import React, { useState } from 'react'
 import { Github, House, Instagram, Linkedin, Menu, ScrollText, Sparkles, Users, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link as ScrollLink } from 'react-scroll';
 import Link from 'next/link';
 
 
