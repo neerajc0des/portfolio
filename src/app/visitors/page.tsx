@@ -229,7 +229,7 @@ const Visitors = () => {
                         <div className="space-y-2">
                             <Input name='name' id='name'
                                 type='text'
-                                max={15}
+                                maxLength={15}
                                 value={newNoteState.name}
                                 onChange={(e) => setNewNoteState(prev => ({ ...prev, name: e.target.value }))}
                                 placeholder='Name' className='text-xs border-zinc-400/70 font-mono' />
@@ -237,7 +237,7 @@ const Visitors = () => {
                         <div className="space-y-2">
                             <Input name='desc' id='desc'
                                 type='text'
-                                max={25}
+                                maxLength={25}
                                 value={newNoteState.desc}
                                 onChange={(e) => setNewNoteState(prev => ({ ...prev, desc: e.target.value }))}
                                 placeholder='Type your note...' className='text-xs border-zinc-400/70 font-mono' />
