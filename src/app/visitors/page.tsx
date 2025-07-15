@@ -3,7 +3,7 @@ import NoteCard from '@/components/NoteCard'
 import SketchPanel, { SketchPanelHandle } from '@/components/SketchPanel'
 import { Button } from '@/components/ui/button'
 import { LayoutGrid, Loader2, Plus, SquareDashedMousePointer, Users } from 'lucide-react'
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useMemo } from 'react'
 import {
     Dialog,
     DialogClose,
@@ -50,7 +50,8 @@ const Visitors = () => {
             initialX: 200,
             initialY: 202,
         },
-    ])
+    ]);
+    const [boardNotes, setBoardNotes] = useState<VisitorNote[]>([]);
 
     const [newNoteState, setNewNoteState] = useState<{
         name: string;
@@ -94,8 +95,6 @@ const Visitors = () => {
 
     }, [])
 
-
-
     const handleSaveNote = async () => {
         if (!sketchPanelRef.current) return;
 
@@ -132,8 +131,27 @@ const Visitors = () => {
 
     // console.log(notes);
 
-    
+    const shuffleArray = (array: VisitorNote[]) => {
+        const shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; 
+        }
+        return shuffled;
+    };
 
+
+    const memoizedShuffledNotes = useMemo(() => {
+        return shuffleArray(notes);
+    }, [notes]);
+
+    useEffect(() => {
+        if (memoizedShuffledNotes.length > 0) {
+            const selected = memoizedShuffledNotes.slice(0, Math.min(15, memoizedShuffledNotes.length));
+            setBoardNotes(selected);
+        }
+    }, [memoizedShuffledNotes]);
+    
 
     const handleViewToggle = () => {
         setNotesView((curView: string) => {
@@ -171,7 +189,7 @@ const Visitors = () => {
                                 <Button type='button' className='cursor-pointer py-5' onClick={() => setIsAddNoteDialogOpen(true)}><Plus /> Leave a note</Button>
                                 :
                                 <>
-                                    <span className='text-primary text-sm 
+                                    <span className='text-sm 
                                 relative
                                 inline-block
                                 text-transparent
@@ -206,7 +224,7 @@ const Visitors = () => {
                             </div>
                             :
                             <div className="dragViewNotesWrapper  pt-[5rem] w-full">
-                                {notes.map((note, idx) => {
+                                {boardNotes.map((note, idx) => {
                                     return (
                                         <NoteCard key={idx}
                                             imgUrl={note.imgUrl}
