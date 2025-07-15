@@ -78,9 +78,9 @@ const NoteCard = ({ imgUrl, name, desc, initialRotation, isBoardView = false, in
         >
 
             <img src={imgUrl} alt="note Image" width={'300px'} className="object-cover rounded-sm border pointer-events-none" />
-            <div className="space-y-2 mt-2 font-mono pointer-events-none">
-                <h3 className="text-xs text-muted w-full font-semibold truncate mb-1">{name}</h3>
-                <p className="text-primary text-xs font-semibold">{desc}</p>
+            <div className="space-y-2 mt-2 font-mono pointer-events-none w-full">
+                <h3 className="text-xs text-muted w-full font-semibold break-words mb-1">{name}</h3>
+                <p className="text-primary text-xs break-words font-semibold w-full">{desc}</p>
             </div>
         </div>
     )

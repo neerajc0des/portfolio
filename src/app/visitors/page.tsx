@@ -132,6 +132,8 @@ const Visitors = () => {
 
     // console.log(notes);
 
+    
+
 
     const handleViewToggle = () => {
         setNotesView((curView: string) => {
