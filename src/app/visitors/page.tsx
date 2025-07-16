@@ -239,7 +239,7 @@ const Visitors = () => {
                                 <Button type='button' className='cursor-pointer py-5' onClick={() => setIsAddNoteDialogOpen(true)}><Plus /> Leave a note</Button>
                                 :
                                 <>
-                                    <span className='text-xs  sm:text-sm
+                                    <span className='text-sm
                                                     relative
                                                     inline-block
                                                     text-transparent
