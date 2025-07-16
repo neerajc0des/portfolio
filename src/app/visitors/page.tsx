@@ -2,7 +2,7 @@
 import NoteCard from '@/components/NoteCard'
 import SketchPanel, { SketchPanelHandle } from '@/components/SketchPanel'
 import { Button } from '@/components/ui/button'
-import { LayoutGrid, Loader2, Plus, SquareDashedMousePointer, Users } from 'lucide-react'
+import { ChevronDown, LayoutGrid, Loader2, Plus, SquareDashedMousePointer, Users } from 'lucide-react'
 import React, { useEffect, useState, useRef, useMemo } from 'react'
 import {
     Dialog,
@@ -14,7 +14,7 @@ import {
 import { Input } from "@/components/ui/input"
 
 import { dbFirestore } from '@/lib/firebase';
-import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, query, orderBy, serverTimestamp, getDocs, QueryDocumentSnapshot, DocumentData, startAfter, limit } from 'firebase/firestore';
 import { usePresence, useLiveUserCount } from "@/lib/useLiveUserCount"
 import leoProfanity from "leo-profanity";
 import customSlangs from "@/lib/customSlangs.json"
@@ -41,6 +41,10 @@ const Visitors = () => {
     const [isAddNoteDialogOpen, setIsAddNoteDialogOpen] = useState(false)
     const [isFormSubmitting, setIsFormSubmitting] = useState(false)
     const [notesView, setNotesView] = useState("grid");
+    const [lastDoc, setLastDoc] = useState<QueryDocumentSnapshot<DocumentData> | null>(null);
+    const [loading, setLoading] = useState(false);
+    const [hasMore, setHasMore] = useState(true);
+    const [isFirstLoad, setIsFirstLoad] = useState(true);
     const [notes, setNotes] = useState<VisitorNote[]>([
         {
             imgUrl: "/noteThumb300x300.png",
@@ -63,37 +67,78 @@ const Visitors = () => {
         imgUrl: "",
     });
 
+    const fetchNotes = async (reset = false) => {
+        if (loading && !reset) return; 
 
-    useEffect(() => {
         const newNotePostedVal = JSON.parse(localStorage.getItem("hasPosted") || `"no"`)
         setIsNotePosted(newNotePostedVal);
-        
-        const q = query(collection(dbFirestore, 'visitorNotes'), orderBy('timestamp', 'desc'));
 
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-            const fetchedNotes: VisitorNote[] = [];
-            snapshot.forEach((doc) => {
-                fetchedNotes.push({
+        setLoading(true);
+
+        try {
+            let currentLastDoc = lastDoc;
+            if (reset) {
+                setNotes([]); 
+                currentLastDoc = null; 
+                setHasMore(true);
+                setIsFirstLoad(true); 
+            }
+
+            const notesQry = currentLastDoc
+                ? query(
+                    collection(dbFirestore, 'visitorNotes'),
+                    orderBy('timestamp', 'desc'),
+                    startAfter(currentLastDoc),
+                    limit(12)
+                )
+                : query(
+                    collection(dbFirestore, 'visitorNotes'),
+                    orderBy('timestamp', 'desc'),
+                    limit(12)
+                );
+
+            const snapshot = await getDocs(notesQry);
+
+            if (isFirstLoad || reset) {
+                setIsFirstLoad(false);
+            }
+
+            if (snapshot.empty) {
+                setHasMore(false);
+                setLoading(false); 
+                return;
+            }
+
+            const fetched: VisitorNote[] = snapshot.docs.map((doc) => {
+                const data = doc.data() as VisitorNote;
+                return {
                     id: doc.id,
-                    ...(doc.data() as VisitorNote),
-                    timestamp: doc.data().timestamp ? doc.data().timestamp.toDate() : null,
-                });
-            });
+                    ...data,
+                    timestamp: data.timestamp ? data.timestamp.toDate() : null,
+                }
+            })
 
-            const notesWithClientProps = fetchedNotes.map(note => ({
-                ...note,
-                initialRotation: getRandomRotation(),
-                initialX: Math.floor(Math.random() * 300),
-                initialY: Math.floor(Math.random() * 400),
-            }));
-            setNotes(notesWithClientProps);
-        }, (error) => {
-            console.error("Error fetching notes from Firestore: ", error);
-        });
+            if (reset) {
+                setNotes(fetched);
+            } else { 
+                setNotes((prev) => [...prev, ...fetched]);
+            }
+            setLastDoc(snapshot.docs[snapshot.docs.length - 1]);
 
-        return () => unsubscribe();
+            if (snapshot.docs.length < 12) {
+                setHasMore(false);
+            }
 
-    }, [])
+        } catch (error: any) {
+            console.error("Error fetching notes:", error); 
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        fetchNotes(true);
+    }, []);
 
     const handleSaveNote = async () => {
         if (!sketchPanelRef.current) return;
@@ -118,6 +163,11 @@ const Visitors = () => {
 
             await addDoc(collection(dbFirestore, 'visitorNotes'), newNote);
 
+            setLastDoc(null);
+            setHasMore(true); 
+            setIsFirstLoad(true); 
+            fetchNotes(true);
+
             setIsNotePosted("yes")
             localStorage.setItem("hasPosted", JSON.stringify("yes"))
             setIsAddNoteDialogOpen(false);
@@ -135,7 +185,7 @@ const Visitors = () => {
         const shuffled = [...array];
         for (let i = shuffled.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; 
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
         }
         return shuffled;
     };
@@ -151,7 +201,7 @@ const Visitors = () => {
             setBoardNotes(selected);
         }
     }, [memoizedShuffledNotes]);
-    
+
 
     const handleViewToggle = () => {
         setNotesView((curView: string) => {
@@ -184,20 +234,20 @@ const Visitors = () => {
                             </div>
                         </div>
                         <div className="navRight">
-                            {isNotePosted == "no"
+                            {(isNotePosted == "no" && !loading)
                                 ?
                                 <Button type='button' className='cursor-pointer py-5' onClick={() => setIsAddNoteDialogOpen(true)}><Plus /> Leave a note</Button>
                                 :
                                 <>
-                                    <span className='text-sm 
-                                relative
-                                inline-block
-                                text-transparent
-                                bg-clip-text
-                                bg-[linear-gradient(90deg,#333_0%,#666_45%,#fff_50%,#666_55%,#333_100%)]
-                                bg-[length:300%_100%]
-                                bg-[position:-300%_0]
-                                hover:animate-[shine_10s_linear]                            
+                                    <span className='text-xs  sm:text-sm
+                                                    relative
+                                                    inline-block
+                                                    text-transparent
+                                                    bg-clip-text
+                                                    bg-[linear-gradient(90deg,#333_0%,#666_45%,#fff_50%,#666_55%,#333_100%)]
+                                                    bg-[length:300%_100%]
+                                                    bg-[position:-300%_0]
+                                                    hover:animate-[shine_10s_linear]                            
                                 '>Thank you for your note!</span>❤️
                                 </>
                             }
@@ -239,6 +289,27 @@ const Visitors = () => {
                                 })}
                             </div>
                         }
+
+                        {(!isFirstLoad && hasMore && notesView == "grid") && (
+                            <div className="w-full flex justify-center py-8">
+                                <Button
+                                    onClick={()=>fetchNotes()}
+                                    disabled={loading}
+                                    className="px-6 py-3 rounded-md border border-zinc-300 bg-primary hover:bg-primary/80 cursor-pointer transition disabled:opacity-50"
+                                >
+                                    {loading ? (
+                                        <div className="flex items-center gap-2">
+                                            See more
+                                            <Loader2 color='#fafafa' className='animate-spin'/>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            See more <ChevronDown />
+                                        </>
+                                    )}
+                                </Button>
+                            </div>
+                        )}
                     </div>
                 </div>
 
@@ -271,7 +342,7 @@ const Visitors = () => {
                             <Button type="button" onClick={handleSaveNote}
                                 disabled={!newNoteState.name || !newNoteState.desc || isFormSubmitting}
                                 variant="default" className='cursor-pointer border border-zinc-400/80 h-[30px]'>
-                                {isFormSubmitting && <Loader2 />} Save
+                                Save {isFormSubmitting && <Loader2 color='#fafafa' className='animate-spin'/>}
                             </Button>
                         </DialogFooter>
                     </DialogContent>
