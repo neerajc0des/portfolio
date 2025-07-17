@@ -12,7 +12,7 @@ const Projects = () => {
           <RevealOnScroll>
             <h1 className="sectionHeader text-xl md:text-2xl font-semibold capitalize text-left">My Projects</h1>
           </RevealOnScroll>
-          
+
           <RevealOnScroll>
             <div className="proj0 p-2 lg:p-5 border border-zinc-200 rounded-md">
               <div className="projImg relative w-[100%] h-[250px] md:h-[300px] border border-zinc-200 lg:h-[335px] rounded-md overflow-hidden">
@@ -21,7 +21,7 @@ const Projects = () => {
               <div className="projContent space-y-2">
                 <h1 className="text-base lg:text-lg mt-5 font-semibold">Canvasly</h1>
                 <p className="text-sm text-paragraph">
-                  A demo for the Canvasly React component, featuring interactive drawing with customizable tools, essential controls (undo, redo, clear), and PNG export. Responsive and smooth across all devices.
+                  A demo for Canvasly, the React NPM package I created, showcasing interactive drawing with customizable tools, essential controls, and PNG export. Responsive across all devices.
                 </p>
                 <div className="tagContainer flex flex-wrap items-center gap-2 mt-2 lg:mt-5">
                   <span className="bg-border text-primary py-1 px-4 rounded-md text-xs lg:text-sm">React js</span>
