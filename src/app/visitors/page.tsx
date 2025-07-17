@@ -67,8 +67,10 @@ const Visitors = () => {
         imgUrl: "",
     });
 
+    const NOTES_PER_PAGE = 20;
+
     const fetchNotes = async (reset = false) => {
-        if (loading && !reset) return; 
+        if (loading && !reset) return;
 
         const newNotePostedVal = JSON.parse(localStorage.getItem("hasPosted") || `"no"`)
         setIsNotePosted(newNotePostedVal);
@@ -78,10 +80,19 @@ const Visitors = () => {
         try {
             let currentLastDoc = lastDoc;
             if (reset) {
-                setNotes([]); 
-                currentLastDoc = null; 
+                setNotes([
+                    {
+                        imgUrl: "/noteThumb300x300.png",
+                        name: "Tyson",
+                        desc: "Awesome portfolio!",
+                        initialRotation: 4,
+                        initialX: 200,
+                        initialY: 202,
+                    },
+                ]);
+                currentLastDoc = null;
                 setHasMore(true);
-                setIsFirstLoad(true); 
+                setIsFirstLoad(true);
             }
 
             const notesQry = currentLastDoc
@@ -89,12 +100,12 @@ const Visitors = () => {
                     collection(dbFirestore, 'visitorNotes'),
                     orderBy('timestamp', 'desc'),
                     startAfter(currentLastDoc),
-                    limit(12)
+                    limit(NOTES_PER_PAGE)
                 )
                 : query(
                     collection(dbFirestore, 'visitorNotes'),
                     orderBy('timestamp', 'desc'),
-                    limit(12)
+                    limit(NOTES_PER_PAGE)
                 );
 
             const snapshot = await getDocs(notesQry);
@@ -105,7 +116,7 @@ const Visitors = () => {
 
             if (snapshot.empty) {
                 setHasMore(false);
-                setLoading(false); 
+                setLoading(false);
                 return;
             }
 
@@ -120,17 +131,17 @@ const Visitors = () => {
 
             if (reset) {
                 setNotes(fetched);
-            } else { 
+            } else {
                 setNotes((prev) => [...prev, ...fetched]);
             }
             setLastDoc(snapshot.docs[snapshot.docs.length - 1]);
 
-            if (snapshot.docs.length < 12) {
+            if (snapshot.docs.length < NOTES_PER_PAGE) {
                 setHasMore(false);
             }
 
         } catch (error: any) {
-            console.error("Error fetching notes:", error); 
+            console.error("Error fetching notes:", error);
         } finally {
             setLoading(false);
         }
@@ -164,8 +175,8 @@ const Visitors = () => {
             await addDoc(collection(dbFirestore, 'visitorNotes'), newNote);
 
             setLastDoc(null);
-            setHasMore(true); 
-            setIsFirstLoad(true); 
+            setHasMore(true);
+            setIsFirstLoad(true);
             fetchNotes(true);
 
             setIsNotePosted("yes")
@@ -293,14 +304,14 @@ const Visitors = () => {
                         {(!isFirstLoad && hasMore && notesView == "grid") && (
                             <div className="w-full flex justify-center py-8">
                                 <Button
-                                    onClick={()=>fetchNotes()}
+                                    onClick={() => fetchNotes()}
                                     disabled={loading}
                                     className="px-6 py-3 rounded-md border border-zinc-300 bg-primary hover:bg-primary/80 cursor-pointer transition disabled:opacity-50"
                                 >
                                     {loading ? (
                                         <div className="flex items-center gap-2">
                                             See more
-                                            <Loader2 color='#fafafa' className='animate-spin'/>
+                                            <Loader2 color='#fafafa' className='animate-spin' />
                                         </div>
                                     ) : (
                                         <>
@@ -342,7 +353,7 @@ const Visitors = () => {
                             <Button type="button" onClick={handleSaveNote}
                                 disabled={!newNoteState.name || !newNoteState.desc || isFormSubmitting}
                                 variant="default" className='cursor-pointer border border-zinc-400/80 h-[30px]'>
-                                Save {isFormSubmitting && <Loader2 color='#fafafa' className='animate-spin'/>}
+                                Save {isFormSubmitting && <Loader2 color='#fafafa' className='animate-spin' />}
                             </Button>
                         </DialogFooter>
                     </DialogContent>
