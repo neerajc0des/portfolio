@@ -209,7 +209,7 @@ export default function Home() {
                 <div className="projContent space-y-2">
                   <h1 className="text-base lg:text-lg mt-5 font-semibold">29 Bytes Landing Page</h1>
                   <p className="text-sm text-paragraph">
-                    A soft pastel-themed landing page crafted for 29 Bytes, a product-focused startup. Clean layout, smooth interactions, and a modern aesthetic that reflects the brand.Built to convert — with clear sections, subtle animations, and a functional contact form. Simple, elegant, and straight to the point — just like the company it represents.
+                    A soft pastel-themed landing page for 29 Bytes, a product-focused startup. Features a clean layout, smooth interactions, and a functional contact form.
                   </p>
                   <div className="tagContainer flex flex-wrap items-center gap-2 mt-2 lg:mt-5">
                     <span className="bg-border text-primary py-1 px-4 rounded-md text-xs lg:text-sm">React</span>
@@ -262,7 +262,7 @@ export default function Home() {
 
             <div className="h-px mx-auto my-5 w-[150px] lg:w-full lg:my-10 bg-zinc-200"></div>
 
-            
+
           </RevealOnScroll>
         </div>
       </div>
