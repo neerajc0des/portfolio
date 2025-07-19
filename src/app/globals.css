@@ -45,8 +45,8 @@ body {
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-paragraph: var(--paragraph);
-  --color-link: var(--link); 
-  --color-icon: var(--icon-color); 
+  --color-link: var(--link);
+  --color-icon: var(--icon-color);
 }
 
 :root {
@@ -102,17 +102,17 @@ body {
   cursor: url('/cursorCircle.png') 12 12, auto;
 } */
 
-.skill-item:hover{
+.skill-item:hover {
   background-color: #f0f0f0;
   transition: background ease-in-out 150ms;
 }
 
-.skill-item:hover .skill-icon{
+.skill-item:hover .skill-icon {
   transform: translateY(-2px);
   transition: all ease-in-out 150ms;
 }
 
-.l-screen-nav-item:hover{
+.l-screen-nav-item:hover {
   transform: translateY(-2px);
   transition: all ease-in-out 150ms;
 }
@@ -126,32 +126,26 @@ body {
   position: absolute;
   overflow: hidden;
 
-  mask-image: linear-gradient(
-    to bottom,
-    black 0%,      
-    black 50%,    
-    transparent 100%  
-  );
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    black 0%,
-    black 50%,
-    transparent 100%
-  );
+  mask-image: linear-gradient(to bottom,
+      black 0%,
+      black 50%,
+      transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom,
+      black 0%,
+      black 50%,
+      transparent 100%);
 }
 
 .aura-content {
   height: 100%;
   position: relative;
-  background: radial-gradient(
-    circle at bottom,
-    #ffeafc,         
-    #edebffc7 20%,    
-    #f1fff4c0 30%,    
-    #fdfff1 40%,     
-    #ffe3e3 60%,      
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: radial-gradient(circle at bottom,
+      #ffeafc,
+      #edebffc7 20%,
+      #f1fff4c0 30%,
+      #fdfff1 40%,
+      #ffe3e3 60%,
+      rgba(255, 255, 255, 0) 100%);
   background-size: 300% 200%;
   animation: gradientShift 25s ease infinite;
 }
@@ -160,15 +154,19 @@ body {
   0% {
     background-position: 0% 0%;
   }
+
   25% {
     background-position: 50% 100%;
   }
+
   50% {
-    background-position: 100% 0%; 
+    background-position: 100% 0%;
   }
+
   75% {
     background-position: 50% 0%;
   }
+
   100% {
     background-position: 0% 0%;
   }
@@ -178,6 +176,7 @@ body {
   0% {
     background-position: -300% 0;
   }
+
   100% {
     background-position: 300% 0;
   }
@@ -189,28 +188,44 @@ body {
 }
 
 .no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 
-.circle-picker > span > div {
-  border: 1px solid #ababab; 
+.circle-picker>span>div {
+  border: 1px solid #ababab;
   border-radius: 100%;
   box-sizing: border-box;
 }
 
 .hue-wheel-gradient {
-  background: conic-gradient(
-    from 0deg,
-    rgb(255, 91, 91),
-    rgb(255, 195, 85),
-    rgb(255, 255, 85),
-    rgb(131, 255, 131), 
-    rgb(136, 255, 255), 
-    rgb(92, 92, 255),
-    rgb(255, 103, 255), 
-    rgb(255, 114, 114)
-  );
-  border-radius: 50%; 
+  background: conic-gradient(from 0deg,
+      rgb(255, 91, 91),
+      rgb(255, 195, 85),
+      rgb(255, 255, 85),
+      rgb(131, 255, 131),
+      rgb(136, 255, 255),
+      rgb(92, 92, 255),
+      rgb(255, 103, 255),
+      rgb(255, 114, 114));
+  border-radius: 50%;
+}
+
+
+.liquid-glass-container::before {
+  content: '';
+  position: absolute;
+  inset: 0; 
+  z-index: -1; 
+  border-radius: 1rem;
+  backdrop-filter: blur(3px) brightness(1.1);
+  filter: url(#glass-distortion);
+}
+
+.liquid-glass-container {
+  position: relative;
+  isolation: isolate;
 }

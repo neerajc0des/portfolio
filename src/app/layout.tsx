@@ -47,10 +47,12 @@ export default function RootLayout({
         <div className="aura-container">
           <div className="aura-content"></div>
         </div>
-        <header className="navContainer hidden md:flex items-center justify-center fixed top-10 z-50  px-4 py-3 w-full">
+        <header className="navContainer hidden md:flex items-center justify-center fixed top-10 z-[9999]  px-4 py-3 w-full">
           <Navbar />
         </header>
-        <MobileNav />
+        <div className="fixed top-0 z-[9999] w-[100vw]">
+          <MobileNav />
+        </div>
         {children}
         <div className="footer text-center text-sm lg:text-base text-[#A1A1AA] pt-5 pb-8">
               Copyright © {new Date().getFullYear()} Neeraj <br />

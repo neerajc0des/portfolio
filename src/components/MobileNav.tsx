@@ -13,7 +13,7 @@ const MobileNav = () => {
     };
     return (
         <>
-            <header className="flex md:hidden items-center justify-between fixed top-0 z-[9999]  p-5 w-full border border-zinc-200 bg-white/65 backdrop-blur-lg text-zinc-700">
+            <header className="flex md:hidden items-center justify-between  z-[9999] shadow-sm p-5 w-full liquid-glass-container rounded-xl text-zinc-700">
                 <Link href="/" title="Home" className='hover:opacity-80 px-2'>
                     <House strokeWidth='2' size={22} />
                 </Link>
@@ -35,7 +35,7 @@ const MobileNav = () => {
                     )}
                 </span>
             </header>
-            <div className={`mobile-nav-menu md:hidden fixed ${isMobileMenuOpen ? "top-[65px] opacity-100 z-[9999]" : "top-[40px]   opacity-0"} transition-all duration-300 ease-in-out left-0 right-0 pb-5 bg-white/65 backdrop-blur-lg border-b border-zinc-200 shadow-lg max-w-full overflow-hidden flex flex-col`}>
+            <div className={`mobile-nav-menu md:hidden fixed ${isMobileMenuOpen ? "top-[65px] opacity-100 z-[9999] flex" : "top-[40px] hidden  opacity-0"} transition-all duration-300 ease-in-out left-0 right-0 pb-5 bg-white/65 backdrop-blur-md border-b border-zinc-200 shadow-2xl max-w-full overflow-hidden flex flex-col`}>
                 <a href="https://github.com/neerajc0des" title="Github" target="_blank" rel="noopener noreferrer" className='flex items-center gap-3 text-lg py-5 px-7 hover:bg-gray-50 hover:translate-x-1 transition-all duration-300 ease-in-out'>
                     <Github strokeWidth='2' size={25} /> GitHub
                 </a>
