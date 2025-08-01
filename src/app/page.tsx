@@ -143,7 +143,7 @@ export default function Home() {
                 </div>
 
                 <div className="workItem flex flex-col md:flex-row md:items-center gap-2 md:justify-between">
-                  <div className="duration text-[#A1A1AA] text-sm md:text-base w-[300px]">Oct 2024 - Feb 2025</div>
+                  <div className="duration text-[#A1A1AA] text-sm md:text-base w-[300px]">Jun 2024 - May 2025</div>
                   <div className="work flex items-center flex-1 justify-start gap-2">
                     <p className="text-paragraph">Frontend Dev at</p>
                     <Button asChild className="cursor-pointer bg-[#F7EFFF] hover:bg-[#F7EFFF] border border-[#efbfff] text-[#8A429E] hover:shadow-sm">
