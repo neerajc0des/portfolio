@@ -52,9 +52,9 @@ export default function Home() {
               <h1 className="sectionHeader text-xl md:text-2xl font-semibold">About</h1>
               <div className="sectionContent text-muted">
                 I'm Neeraj. Software dev based in Delhi, born in Madhya Pradesh.
-                Currently pursuing MCA at Delhi University.
+                Currently pursuing <span className="text-paragraph">MCA</span> at <span className="text-paragraph">NIT Raipur</span>.
                 <br /><br />
-                I've worked as a frontend developer for 6 months, shipping real-world products and collaborating closely with cross-functional teams. I care about the details — every pixel, every transition, every interaction.
+                I've worked as a frontend developer for over an year, shipping real-world products and collaborating closely with cross-functional teams. I care about the details — every pixel, every transition, every interaction.
                 <br /><br />
                 I don't just build interfaces. I craft interfaces that work.
               </div>
@@ -158,6 +158,31 @@ export default function Home() {
                   <div className="duration text-[#A1A1AA] text-sm md:text-base w-[300px]">Feb 2023 -  Oct 2023</div>
                   <div className="work flex items-center flex-1 justify-start gap-2">
                     <p className="text-paragraph">COMEST(College Society) Tech Lead</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </RevealOnScroll>
+
+          <div className="h-px mx-auto my-5 w-[150px] lg:w-full lg:my-10 bg-zinc-200"></div>
+
+          <RevealOnScroll className="space-y-8">
+            <section className="expSection flex flex-col gap-10">
+              <h1 className="sectionHeader text-xl md:text-2xl font-semibold">Education</h1>
+              <div className="sectionContent text-muted space-y-6 md:space-y-8">
+                <div className="eduItem flex flex-col md:flex-row md:items-start gap-2 md:justify-between">
+                  <div className="duration text-[#A1A1AA] text-sm md:text-base w-[300px]">Aug 2025 - Present</div>
+                  <div className="edu flex flex-col items-start flex-1 justify-start gap-2">
+                    <p className="text-paragraph text-capitalize">Masters in Computer Applications</p>
+                    <p className="text-sm">NIT Raipur</p>
+                  </div>
+                </div>
+                
+                <div className="eduItem flex flex-col md:flex-row md:items-start gap-2 md:justify-between">
+                  <div className="duration text-[#A1A1AA] text-sm md:text-base w-[300px]">Sep 2021 - Jun 2024</div>
+                  <div className="edu flex flex-col items-start flex-1 justify-start gap-2">
+                    <p className="text-paragraph text-capitalize">Bachelors in computer science</p>
+                    <p className="text-sm">University of Delhi</p>
                   </div>
                 </div>
               </div>
